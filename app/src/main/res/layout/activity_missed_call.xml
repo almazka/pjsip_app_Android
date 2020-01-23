@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.telefon.ufanet.MissedCallActivity"
+    android:orientation="vertical"
+    android:background="@drawable/bkgrd">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/top_image"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/gradient_bg"
+                        android:layout_height="0dp" />
+
+                    <ImageView
+                        android:id="@+id/bottom_image"
+                        android:layout_width="match_parent"
+                        android:layout_weight="2"
+                        android:background="#00ffffff"
+                        android:layout_height="0dp" />
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="25dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:paddingTop="2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" >
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/missed"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    android:fontFamily="sans-serif"
+                                    android:text="Пропущенные вызовы"
+                                    android:textColor="#000000"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold" />
+
+
+                                <LinearLayout
+                                    android:id="@+id/lin1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/missed"
+                                    android:orientation="vertical"
+                                    android:paddingLeft="15dp"
+                                    android:paddingRight="15dp"
+                                    android:layout_marginTop="10dp">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+
+                                        <TextView
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="sans-serif"
+                                            android:text="Период от: "
+                                            android:textAllCaps="false"
+                                            android:textColor="#000"
+                                            android:textSize="15sp" />
+
+                                        <TextView
+                                            android:id="@+id/firstdate_missed"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="25dp"
+                                            android:layout_marginTop="5dp"
+                                            android:background="@drawable/et_bg_black"
+                                            android:fontFamily="sans-serif"
+                                            android:paddingLeft="15dp"
+                                            android:paddingRight="15dp"
+                                            android:textAlignment="center"
+                                            android:textColor="#000"
+                                            android:textSize="15sp" />
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:orientation="horizontal">
+
+
+                                        <TextView
+                                            android:layout_marginTop="5dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="sans-serif"
+                                            android:text="По: "
+                                            android:textAllCaps="false"
+                                            android:textColor="#000000"
+                                            android:textSize="15sp" />
+
+                                        <TextView
+                                            android:textAlignment="center"
+                                            android:id="@+id/seconddate_missed"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="25dp"
+                                            android:layout_marginTop="5dp"
+                                            android:background="@drawable/et_bg_black"
+                                            android:fontFamily="sans-serif"
+                                            android:paddingLeft="15dp"
+                                            android:paddingRight="15dp"
+                                            android:textColor="#000000"
+                                            android:textSize="15sp" />
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_marginTop="10dp"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_weight="0.1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Причина разъединения: "
+                                            android:textSize="15sp"
+                                            android:textColor="#000"
+                                            android:fontFamily="sans-serif"/>
+
+                                        <Spinner
+                                            android:layout_marginTop="5dp"
+                                            android:layout_weight="1"
+                                            android:textAlignment="center"
+                                            android:id="@+id/sp1"
+                                            android:entries="@array/catlist"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:spinnerMode="dropdown"
+                                            android:visibility="visible"
+                                            android:background="@drawable/et_bg_black">
+                                        </Spinner>
+
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_marginTop="10dp"
+                                    android:id="@+id/interval"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/lin1"
+                                    android:gravity="center"
+                                    android:text="(Данные обновляются каждые 15 минут)" />
+
+                                <Button
+                                    android:id="@+id/prim_missed"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:layout_below="@id/interval"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginBottom="15dp"
+                                    android:background="@drawable/button_background"
+                                    android:fontFamily="sans-serif"
+                                    android:paddingLeft="20dp"
+                                    android:paddingRight="20dp"
+                                    android:text="Показать"
+                                    android:textAllCaps="false"
+                                    android:textColor="#FFFF"
+                                    android:textSize="16sp" />
+
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </FrameLayout>
+
+            <ProgressBar
+                android:paddingTop="10dp"
+                android:visibility="gone"
+                android:id="@+id/progress_missed"
+                android:minHeight="20dip"
+                android:maxHeight="20dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.ProgressBar.Inverse"/>
+
+            <ImageView
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center"
+                android:layout_width="100dp"
+                android:id="@+id/missed_image_info"
+                android:layout_height="100dp"
+                android:src="@drawable/info2"/>
+
+            <TextView
+                android:id="@+id/missed_text_info"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10pt"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/gray"
+                android:textAlignment="center"
+                android:text="Укажите параметры для отображения информации"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/count_missed"
+                android:visibility="gone"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/fav_test_img"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/info3" />
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        android:text="Найдено записей:"
+                        android:textColor="@color/BLACK" />
+
+                    <TextView
+                        android:id="@+id/missed_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="2dp"
+                        android:text=""
+                        android:textColor="@color/BLACK"
+                        android:textSize="14sp"
+                        android:textStyle="bold|italic" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:id="@+id/missed_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+
+</LinearLayout>

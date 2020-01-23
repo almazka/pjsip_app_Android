@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/linear_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/star_contacts"
+                    android:layout_weight="1"
+                    android:layout_height="45dp"
+                    android:text="Избранные"
+                    android:textSize="14sp"
+                    android:textAllCaps="false"
+                    android:layout_width="wrap_content"
+                    android:background="@color/background"/>
+                <Button
+                    android:id="@+id/worked_contacts"
+                    android:layout_weight="1"
+                    android:layout_height="45dp"
+                    android:text="Рабочие"
+                    android:textSize="14sp"
+                    android:textAllCaps="false"
+                    android:layout_width="wrap_content"
+                    android:background="@color/background"
+                    android:textColor="@color/BLACK"/>
+
+                <Button
+                    android:id="@+id/private_contacts"
+                    android:layout_weight="1"
+                    android:layout_height="45dp"
+                    android:text="Личные"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:background="@color/background"
+                    android:layout_width="wrap_content" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linear_contact"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+                <ProgressBar
+                    android:background="@drawable/bkgrd"
+                    android:paddingTop="10dp"
+                    android:id="@+id/progress_load_contacts"
+                    android:minHeight="20dip"
+                    android:maxHeight="20dip"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    style="@android:style/Widget.ProgressBar.Inverse"/>
+
+                <LinearLayout
+                    android:id="@+id/layout_search"
+                    android:visibility="gone"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/et_search_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/et_search"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="2dp"
+                            android:drawableStart="@drawable/search"
+                            android:layout_width="match_parent"
+                            android:textAlignment="center"
+                            android:inputType="textCapWords"
+                            android:hint="Поиск"
+                            android:background="@drawable/et_bg_gray2"
+                            android:layout_height="wrap_content"
+                            />
+
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/list_contact"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </ListView>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linear_not_found_contact"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/bkgrd">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/admin"/>
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10pt"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/gray"
+                    android:text="Нет совпадений в списке контактов."/>
+
+            </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/linear_load_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/bkgrd">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/admin"/>
+                        <TextView
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="10pt"
+                            android:textAlignment="center"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/gray"
+                            android:text="Загрузка списка контактов \nОбновите страницу через несколько секунд"/>
+
+                </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/linear_not_found"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/bkgrd">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/admin"/>
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10pt"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/gray"
+                    android:text="Здесь пока ничего нет."/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/linear_star"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+                <com.baoyz.swipemenulistview.SwipeMenuListView
+                    android:id="@+id/list_star"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/linear_workers"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+                <ProgressBar
+                    android:visibility="gone"
+                    android:paddingTop="10dp"
+                    android:id="@+id/progressBarWorkers"
+                    android:minHeight="20dip"
+                    android:maxHeight="20dip"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    style="@android:style/Widget.ProgressBar.Inverse"/>
+
+                <com.baoyz.swipemenulistview.SwipeMenuListView
+                    android:id="@+id/list_workers"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+</LinearLayout>
