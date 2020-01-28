@@ -18,14 +18,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.ufanet.myapplication.R;
 import com.telefon.ufanet.MVP.Data.AuthorizeData;
 import com.telefon.ufanet.MVP.Interfaces.IAuthActivity;
 import com.telefon.ufanet.MVP.Model.AuthorizeModel;
 import com.telefon.ufanet.MVP.Presenter.AuthorizePresenter;
-
-
+import com.telefon.ufanet.R;
 
 
 public class AuthorizeActivity extends AppCompatActivity implements IAuthActivity {
@@ -67,8 +64,8 @@ public class AuthorizeActivity extends AppCompatActivity implements IAuthActivit
         editTextUsername = (EditText) findViewById(R.id.et_login);
         editTextPassword = (EditText) findViewById(R.id.et_pass);
         buttonLogin = (Button) findViewById(R.id.login_btn);
-        rellay1 = (RelativeLayout) findViewById(R.id.rellay1);
-        rellay2 = (RelativeLayout) findViewById(R.id.rellay2);
+        rellay1 = (RelativeLayout) findViewById(R.id.relative_logo);
+        rellay2 = (RelativeLayout) findViewById(R.id.relative_info);
         rel_main = (RelativeLayout) findViewById(R.id.relative_main);
         checkBox = (CheckBox) findViewById(R.id.check);
         progressbar = (ProgressBar) findViewById(R.id.progressbar);

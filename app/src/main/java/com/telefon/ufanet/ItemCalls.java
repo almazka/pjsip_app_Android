@@ -1,6 +1,4 @@
-package com.example.ufanet.myapplication;
-
-import android.graphics.Bitmap;
+package com.telefon.ufanet;
 
 public class ItemCalls {
 	/**

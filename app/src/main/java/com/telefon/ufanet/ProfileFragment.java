@@ -31,8 +31,6 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.ufanet.myapplication.MyService;
-import com.example.ufanet.myapplication.R;
 import com.telefon.ufanet.MVP.View.AuthorizeActivity;
 
 import org.apache.http.client.ClientProtocolException;

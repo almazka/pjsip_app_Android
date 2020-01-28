@@ -16,18 +16,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-package com.example.ufanet.myapplication;
+package com.telefon.ufanet;
 
-import org.pjsip.pjsua2.Account;
 import org.pjsip.pjsua2.AccountConfig;
-import org.pjsip.pjsua2.AudioMedia;
 import org.pjsip.pjsua2.Buddy;
 import org.pjsip.pjsua2.BuddyConfig;
 import org.pjsip.pjsua2.BuddyInfo;
-import org.pjsip.pjsua2.Call;
-import org.pjsip.pjsua2.CallInfo;
-import org.pjsip.pjsua2.CallMediaInfo;
-import org.pjsip.pjsua2.CallMediaInfoVector;
 import org.pjsip.pjsua2.ContainerNode;
 import org.pjsip.pjsua2.Endpoint;
 import org.pjsip.pjsua2.EpConfig;
@@ -36,25 +30,13 @@ import org.pjsip.pjsua2.JsonDocument;
 import org.pjsip.pjsua2.LogConfig;
 import org.pjsip.pjsua2.LogEntry;
 import org.pjsip.pjsua2.LogWriter;
-import org.pjsip.pjsua2.Media;
-import org.pjsip.pjsua2.OnCallMediaStateParam;
-import org.pjsip.pjsua2.OnCallStateParam;
-import org.pjsip.pjsua2.OnIncomingCallParam;
-import org.pjsip.pjsua2.OnInstantMessageParam;
-import org.pjsip.pjsua2.OnRegStateParam;
 import org.pjsip.pjsua2.TransportConfig;
 import org.pjsip.pjsua2.UaConfig;
-import org.pjsip.pjsua2.VideoPreview;
-import org.pjsip.pjsua2.VideoWindow;
 import org.pjsip.pjsua2.pj_log_decoration;
-import org.pjsip.pjsua2.pjmedia_type;
 import org.pjsip.pjsua2.pjsip_evsub_state;
-import org.pjsip.pjsua2.pjsip_inv_state;
 import org.pjsip.pjsua2.pjsip_status_code;
 import org.pjsip.pjsua2.pjsip_transport_type_e;
-import org.pjsip.pjsua2.pjsua2;
 import org.pjsip.pjsua2.pjsua_buddy_status;
-import org.pjsip.pjsua2.pjsua_call_media_status;
 
 import java.io.File;
 import java.util.ArrayList;

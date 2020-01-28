@@ -1,4 +1,4 @@
-package com.example.ufanet.myapplication;
+package com.telefon.ufanet;
 
 import org.pjsip.pjsua2.Account;
 import org.pjsip.pjsua2.AccountConfig;

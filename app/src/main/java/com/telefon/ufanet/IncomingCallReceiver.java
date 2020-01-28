@@ -1,4 +1,4 @@
-package com.example.ufanet.myapplication;
+package com.telefon.ufanet;
 
 import android.app.Notification;
 import android.app.NotificationManager;

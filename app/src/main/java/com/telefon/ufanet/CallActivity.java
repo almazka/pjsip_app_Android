@@ -16,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-package com.example.ufanet.myapplication;
+package com.telefon.ufanet;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -56,8 +56,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.telefon.ufanet.MainApp;
 
 import org.pjsip.pjsua2.AccountConfig;
 import org.pjsip.pjsua2.CallInfo;

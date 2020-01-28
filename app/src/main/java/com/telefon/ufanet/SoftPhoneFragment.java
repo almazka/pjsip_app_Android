@@ -21,11 +21,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ufanet.myapplication.CallActivity;
-import com.example.ufanet.myapplication.MyAccount;
-import com.example.ufanet.myapplication.MyCall;
-import com.example.ufanet.myapplication.MyService;
-import com.example.ufanet.myapplication.R;
 
 import org.pjsip.pjsua2.CallOpParam;
 

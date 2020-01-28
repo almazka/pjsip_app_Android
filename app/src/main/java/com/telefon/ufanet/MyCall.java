@@ -1,4 +1,4 @@
-package com.example.ufanet.myapplication;
+package com.telefon.ufanet;
 
 import org.pjsip.pjsua2.AudioMedia;
 import org.pjsip.pjsua2.Call;

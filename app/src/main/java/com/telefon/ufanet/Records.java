@@ -29,7 +29,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ufanet.myapplication.R;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
@@ -56,8 +55,6 @@ import java.util.Calendar;
  */
 
 public class Records extends Fragment {
-
-
 
     TextView tv, tv1;
     Calendar mCirrentDate;

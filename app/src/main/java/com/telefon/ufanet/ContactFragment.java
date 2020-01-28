@@ -34,16 +34,7 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.example.ufanet.myapplication.AdapterContacts;
-import com.example.ufanet.myapplication.AdapterContactsStar;
-import com.example.ufanet.myapplication.AdapterContactsWorkers;
-import com.example.ufanet.myapplication.CallActivity;
-import com.example.ufanet.myapplication.ItemContacts;
-import com.example.ufanet.myapplication.ItemContactsWorkers;
-import com.example.ufanet.myapplication.MyAccount;
-import com.example.ufanet.myapplication.MyCall;
-import com.example.ufanet.myapplication.MyService;
-import com.example.ufanet.myapplication.R;
+
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;

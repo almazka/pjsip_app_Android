@@ -1,4 +1,4 @@
-package com.example.ufanet.myapplication;
+package com.telefon.ufanet;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,12 +9,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class AdapterContactsStar extends BaseAdapter {
+public class AdapterContacts extends BaseAdapter {
 
 	ArrayList<ItemContacts> data = new ArrayList<ItemContacts>();
 	Context context;
 
-	public AdapterContactsStar(Context context, ArrayList<ItemContacts> arr) {
+	public AdapterContacts(Context context, ArrayList<ItemContacts> arr) {
 		if (arr != null) {
 			data = arr;
 		}
@@ -25,6 +25,10 @@ public class AdapterContactsStar extends BaseAdapter {
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return data.size();
+	}
+
+	public ArrayList<ItemContacts> getData () {
+		return data;
 	}
 
 	@Override
@@ -45,7 +49,7 @@ public class AdapterContactsStar extends BaseAdapter {
 		//Если someView (View из ListView) вдруг оказался равен
 		//null тогда мы загружаем его с помошью inflater 
 		if (someView == null) {
-			someView = inflater.inflate(R.layout.star_list_view_item, arg2, false);
+			someView = inflater.inflate(R.layout.contact_list_view_item, arg2, false);
 		}
 		//Обявляем наши текствьюшки и связываем их с разметкой
 		TextView header = (TextView) someView.findViewById(R.id.item_headerText);

@@ -1,4 +1,4 @@
-package com.example.ufanet.myapplication;
+package com.telefon.ufanet;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -17,9 +17,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
-
-import androidx.core.app.NotificationCompat;
-
+import androidx.core.app.NotificationCompat;;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;

@@ -27,9 +27,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.ufanet.myapplication.ItemCalls;
-import com.example.ufanet.myapplication.ItemContacts;
-import com.example.ufanet.myapplication.R;
 import com.telefon.ufanet.MVP.Data.AuthorizeData;
 
 import org.pjsip.pjsua2.Endpoint;

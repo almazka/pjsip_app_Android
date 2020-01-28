@@ -1,21 +1,21 @@
-package com.example.ufanet.myapplication;
+package com.telefon.ufanet;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import java.util.ArrayList;
 
-public class AdapterCalls extends BaseAdapter {
+public class AdapterContactsStar extends BaseAdapter {
 
-	ArrayList<ItemCalls> data = new ArrayList<>();
+	ArrayList<ItemContacts> data = new ArrayList<ItemContacts>();
 	Context context;
 
-	public AdapterCalls(Context context, ArrayList<ItemCalls> arr) {
+	public AdapterContactsStar(Context context, ArrayList<ItemContacts> arr) {
 		if (arr != null) {
 			data = arr;
 		}
@@ -46,41 +46,17 @@ public class AdapterCalls extends BaseAdapter {
 		//Если someView (View из ListView) вдруг оказался равен
 		//null тогда мы загружаем его с помошью inflater 
 		if (someView == null) {
-			someView = inflater.inflate(R.layout.contact_list_view_item, arg2, false);
+			someView = inflater.inflate(R.layout.star_list_view_item, arg2, false);
 		}
 		//Обявляем наши текствьюшки и связываем их с разметкой
 		TextView header = (TextView) someView.findViewById(R.id.item_headerText);
 		TextView subHeader = (TextView) someView.findViewById(R.id.item_subHeaderText);
-		ImageView img = (ImageView) someView.findViewById(R.id.profile_photo) ;
 		
 		//Устанавливаем в каждую текствьюшку соответствующий текст
 		// сначала заголовок
-
-		if (data.get(i).name == null) {
-			header.setText(data.get(i).header);
-		}
-		else {
-			header.setText(data.get(i).name);
-		}
+		header.setText(data.get(i).header);
 		// потом подзаголовок
-
-		if (data.get(i).subHeader == "Входящий") {
-			img.setImageResource(R.drawable.downleft);
-		}
-		if (data.get(i).subHeader == "Исходящий") {
-			img.setImageResource(R.drawable.upright);
-		}
-
-		if (data.get(i).subHeader == "Пропущенный") {
-			img.setImageResource(R.drawable.missed_call);
-		}
-
-
-		subHeader.setText(data.get(i).message);
-
-
-
-
+		subHeader.setText(data.get(i).subHeader);
 		return someView;
 	}
 

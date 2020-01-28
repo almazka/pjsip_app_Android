@@ -7,11 +7,12 @@ import android.util.Log;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.ufanet.myapplication.ItemContacts;
-import com.example.ufanet.myapplication.R;
+import com.telefon.ufanet.ItemContacts;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.telefon.ufanet.MVP.Interfaces.IMainAppActivity;
+import com.telefon.ufanet.R;
 import com.telefon.ufanet.SoftPhoneFragment;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;

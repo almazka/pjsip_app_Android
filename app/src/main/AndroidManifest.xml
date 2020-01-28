@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.ufanet.myapplication">
-
-    <uses-sdk tools:overrideLibrary="com.ebanx.swipebtn" />
+    package="com.telefon.ufanet">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
@@ -41,13 +39,13 @@
             android:windowSoftInputMode="stateHidden"/>
 
         <activity
-            android:name=".CallActivity"
+            android:name="com.telefon.ufanet.CallActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:taskAffinity=""
             android:excludeFromRecents="true"/>
 
-        <service android:name=".MyService" />
+        <service android:name="com.telefon.ufanet.MyService" />
 
         <activity android:name="com.telefon.ufanet.PlayerActivity" />
         <activity

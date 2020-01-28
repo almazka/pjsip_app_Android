@@ -1,20 +1,21 @@
-package com.example.ufanet.myapplication;
+package com.telefon.ufanet;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class AdapterContacts extends BaseAdapter {
+public class AdapterCalls extends BaseAdapter {
 
-	ArrayList<ItemContacts> data = new ArrayList<ItemContacts>();
+	ArrayList<ItemCalls> data = new ArrayList<>();
 	Context context;
 
-	public AdapterContacts(Context context, ArrayList<ItemContacts> arr) {
+	public AdapterCalls(Context context, ArrayList<ItemCalls> arr) {
 		if (arr != null) {
 			data = arr;
 		}
@@ -25,10 +26,6 @@ public class AdapterContacts extends BaseAdapter {
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return data.size();
-	}
-
-	public ArrayList<ItemContacts> getData () {
-		return data;
 	}
 
 	@Override
@@ -54,12 +51,36 @@ public class AdapterContacts extends BaseAdapter {
 		//Обявляем наши текствьюшки и связываем их с разметкой
 		TextView header = (TextView) someView.findViewById(R.id.item_headerText);
 		TextView subHeader = (TextView) someView.findViewById(R.id.item_subHeaderText);
+		ImageView img = (ImageView) someView.findViewById(R.id.profile_photo) ;
 		
 		//Устанавливаем в каждую текствьюшку соответствующий текст
 		// сначала заголовок
-		header.setText(data.get(i).header);
+
+		if (data.get(i).name == null) {
+			header.setText(data.get(i).header);
+		}
+		else {
+			header.setText(data.get(i).name);
+		}
 		// потом подзаголовок
-		subHeader.setText(data.get(i).subHeader);
+
+		if (data.get(i).subHeader == "Входящий") {
+			img.setImageResource(R.drawable.downleft);
+		}
+		if (data.get(i).subHeader == "Исходящий") {
+			img.setImageResource(R.drawable.upright);
+		}
+
+		if (data.get(i).subHeader == "Пропущенный") {
+			img.setImageResource(R.drawable.missed_call);
+		}
+
+
+		subHeader.setText(data.get(i).message);
+
+
+
+
 		return someView;
 	}
 

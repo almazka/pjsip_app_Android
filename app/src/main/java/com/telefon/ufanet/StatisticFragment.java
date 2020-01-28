@@ -33,7 +33,6 @@ import com.echo.holographlibrary.BarGraph;
 import com.echo.holographlibrary.HoloGraphAnimate;
 import com.echo.holographlibrary.PieGraph;
 import com.echo.holographlibrary.PieSlice;
-import com.example.ufanet.myapplication.R;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;

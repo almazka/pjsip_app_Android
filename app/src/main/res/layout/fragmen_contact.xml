@@ -55,7 +55,7 @@
             android:layout_weight="1">
 
                 <ProgressBar
-                    android:background="@drawable/bkgrd"
+                    android:background="@drawable/app_background"
                     android:paddingTop="10dp"
                     android:id="@+id/progress_load_contacts"
                     android:minHeight="20dip"
@@ -108,7 +108,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:background="@drawable/bkgrd">
+                android:background="@drawable/app_background">
 
                 <ImageView
                     android:layout_width="100dp"
@@ -132,7 +132,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:background="@drawable/bkgrd">
+                    android:background="@drawable/app_background">
 
                         <ImageView
                             android:layout_width="100dp"
@@ -159,7 +159,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@drawable/bkgrd">
+            android:background="@drawable/app_background">
 
                 <ImageView
                     android:layout_width="100dp"

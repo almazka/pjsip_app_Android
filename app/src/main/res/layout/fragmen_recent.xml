@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@drawable/bkgrd">
+            android:background="@drawable/app_background">
 
                 <TextView
                     android:layout_marginTop="5dp"

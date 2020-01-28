@@ -20,12 +20,6 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.example.ufanet.myapplication.AdapterCalls;
-import com.example.ufanet.myapplication.CallActivity;
-import com.example.ufanet.myapplication.ItemCalls;
-import com.example.ufanet.myapplication.MyCall;
-import com.example.ufanet.myapplication.MyService;
-import com.example.ufanet.myapplication.R;
 
 import org.pjsip.pjsua2.CallOpParam;
 import java.text.Format;
