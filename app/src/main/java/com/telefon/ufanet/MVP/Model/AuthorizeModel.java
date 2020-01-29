@@ -9,10 +9,11 @@ import android.util.Log;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.telefon.ufanet.MVP.Data.AuthorizeData;
+import com.telefon.ufanet.MVP.Data.PrefManager;
 import com.telefon.ufanet.MVP.Data.Sip;
 import com.telefon.ufanet.MVP.Data.Token;
 import com.telefon.ufanet.MVP.Interfaces.IAuthModel;
-import com.telefon.ufanet.MVP.Retrofit.IAPI;
+import com.telefon.ufanet.MVP.Retrofit.IRetrofit;
 import com.telefon.ufanet.MVP.Retrofit.RetrofitClient;
 
 import retrofit2.Call;
@@ -23,13 +24,13 @@ import retrofit2.Retrofit;
 
 public class AuthorizeModel extends MvpAppCompatActivity implements IAuthModel {
 
-    private SharedPreferences sPref;
+    PrefManager prefManager = PrefManager.getInstance();
     private AuthorizeData userData = AuthorizeData.INSTANCE;
 
     @Override
     public void Authorize(final String username, String password, final CompleteCallback callback) {
         Retrofit retrofit = RetrofitClient.getClient();
-        final IAPI api = retrofit.create(IAPI.class);
+        final IRetrofit api = retrofit.create(IRetrofit.class);
         Call<Token> call_usertoken = api.getaccess(username, password, "password");
         call_usertoken.enqueue(new Callback<Token>() {
             @Override
@@ -109,20 +110,16 @@ public class AuthorizeModel extends MvpAppCompatActivity implements IAuthModel {
     }
 
     @Override
-    public AuthorizeData LoadData(Activity activity) {
-        sPref = activity.getPreferences(Context.MODE_PRIVATE);
-        userData.setName(sPref.getString("login",""));
-        userData.setPassword(sPref.getString("password",""));
+    public AuthorizeData LoadData() {
+        userData.setName(prefManager.getString("login"));
+        userData.setPassword(prefManager.getString("password"));
         return userData;
     }
 
     @Override
-    public void SaveData(Activity activity, String login, String password) {
-        sPref = activity.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sPref.edit();
-        editor.putString("login", login);
-        editor.putString("password", password);
-        editor.apply();
+    public void SaveData(String login, String password) {
+        prefManager.saveString("login",login);
+        prefManager.saveString("password", password);
     }
 
 

@@ -73,7 +73,7 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.statistic_fragment, null);
+        return inflater.inflate(R.layout.fragment_statistic, null);
     }
 
     @SuppressLint("SetTextI18n")
@@ -88,7 +88,7 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
         dialog2.setContentView(R.layout.date_dialog_layout);
 
 
-        datePicker = dialog.findViewById(R.id.dp) ;
+        datePicker = dialog.findViewById(R.id.datePicker) ;
         pg = view.findViewById(R.id.piegraph);
         pg1 = view.findViewById(R.id.piegraph2);
         barGraph = view.findViewById(R.id.bargraph);
@@ -98,7 +98,7 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
         first = view.findViewById(R.id.firstdate_statistic);
         second = view.findViewById(R.id.seconddate_statistic);
         button_ok = dialog.findViewById(R.id.button_ok);
-        datePicker2  = dialog2.findViewById(R.id.dp) ;
+        datePicker2  = dialog2.findViewById(R.id.datePicker) ;
         button_ok2 = dialog2.findViewById(R.id.button_ok);
         textinfo1 = view.findViewById(R.id.text_info1);
         textinfo2 = view.findViewById(R.id.text_info2);

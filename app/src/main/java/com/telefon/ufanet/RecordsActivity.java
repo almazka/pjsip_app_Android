@@ -81,7 +81,7 @@ public class RecordsActivity extends AppCompatActivity {
         // ActionBar Settings
         final ActionBar bar = getSupportActionBar();
         bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        bar.setCustomView(R.layout.action_bar);
+        bar.setCustomView(R.layout.action_bar_with_backbutton);
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#670094")));
         getSupportActionBar().setElevation(0);
         action_bar_title = (TextView) findViewById(R.id.action_bar_title1);
@@ -127,7 +127,7 @@ public class RecordsActivity extends AppCompatActivity {
         dialog1.setContentView(R.layout.date_dialog_layout);
 
 
-        final DatePicker datePicker = (DatePicker) dialog.findViewById(R.id.dp);
+        final DatePicker datePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
 
         final Button button = (Button) dialog.findViewById(R.id.button_ok);
         final Calendar today = Calendar.getInstance();
@@ -159,7 +159,7 @@ public class RecordsActivity extends AppCompatActivity {
         });
 
 
-        final DatePicker datePicker1 = (DatePicker) dialog1.findViewById(R.id.dp);
+        final DatePicker datePicker1 = (DatePicker) dialog1.findViewById(R.id.datePicker);
 
         final Button button1 = (Button) dialog1.findViewById(R.id.button_ok);
         Calendar today1 = Calendar.getInstance();
@@ -298,7 +298,7 @@ public class RecordsActivity extends AppCompatActivity {
                                     lin_content.setLayoutParams(new ViewGroup.LayoutParams
                                             (ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                     lin_content.setTag(i);
-                                    lin_content.setBackground(getResources().getDrawable(R.drawable.bg_numbers));
+                                    lin_content.setBackground(getResources().getDrawable(R.drawable.backgrond_numbers));
                                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                                     layoutParams.setMargins(15, 15, 25, 5);
 

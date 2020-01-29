@@ -7,19 +7,18 @@
     android:animateLayoutChanges="true"
     tools:context="com.telefon.ufanet.MainApp">
 
-
     <FrameLayout
         android:id="@+id/content"
-        android:layout_above="@+id/bottom_navigation"
+        android:layout_above="@+id/bottom_navigation_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+        android:id="@+id/bottom_navigation_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_nav"
+        app:menu="@menu/bottom_menu"
         app:itemIconTint="@color/menu_text_color"
         app:itemTextColor="@color/menu_text_color"
         android:background="@color/menu_white" />

@@ -90,7 +90,7 @@ public class MainApp extends AppCompatActivity {
         action_bar_title.setText("Набор номера");
 
         // BottomNavigation Settings
-        bottomnav = findViewById(R.id.bottom_navigation);
+        bottomnav = findViewById(R.id.bottom_navigation_menu);
         bottomnav.setOnNavigationItemSelectedListener(navListenner);
         bottomnav.getMenu().getItem(2).setChecked(true);
 
@@ -268,7 +268,7 @@ public class MainApp extends AppCompatActivity {
 
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
-                        case R.id.nav_recent:
+                        case R.id.navigation_recent:
                             action_bar_title.setText("Недавние вызовы");
                             selected_id = 1;
                             selectedFragment = new RecentFragment();
@@ -280,7 +280,7 @@ public class MainApp extends AppCompatActivity {
                             break;
 
 
-                        case R.id.nav_contacts:
+                        case R.id.navigation_contacts:
                             action_bar_title.setText("Контакты");
                             selected_id = 2;
                             selectedFragment = new ContactFragment();
@@ -294,7 +294,7 @@ public class MainApp extends AppCompatActivity {
                             break;
 
 
-                        case R.id.nav_softphone:
+                        case R.id.navigation_softphone:
                             action_bar_title.setText("Набор номера");
                             selected_id = 3;
                             selectedFragment = new SoftPhoneFragment();
@@ -308,7 +308,7 @@ public class MainApp extends AppCompatActivity {
                             break;
 
 
-                        case R.id.nav_statistic:
+                        case R.id.navigation_statistic:
                             action_bar_title.setText("Статистика");
                             selected_id = 4;
                             selectedFragment = new StatisticFragment();
@@ -322,7 +322,7 @@ public class MainApp extends AppCompatActivity {
                             break;
 
 
-                        case R.id.nav_user:
+                        case R.id.navigation_user:
                             action_bar_title.setText("Профиль");
                             selected_id = 5;
                             selectedFragment = new ProfileFragment();

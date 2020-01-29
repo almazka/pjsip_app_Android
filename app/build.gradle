@@ -30,14 +30,7 @@ android {
     packagingOptions {
         exclude 'META-INF/proguard/coroutines.pro'
     }
-    splits {
-        abi {
-            enable true
-            reset()
-            include 'x86', 'armeabi-v7a','x86_64'
-            universalApk true
-        }
-    }
+
 }
 
 dependencies {
@@ -74,6 +67,8 @@ dependencies {
     kapt 'com.arello-mobile:moxy-compiler:1.5.5'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation "de.d0pam1n:pjsip-for-android:2.6"
 
 
 }

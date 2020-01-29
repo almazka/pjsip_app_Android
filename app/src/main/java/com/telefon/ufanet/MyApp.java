@@ -25,7 +25,6 @@ import org.pjsip.pjsua2.BuddyInfo;
 import org.pjsip.pjsua2.ContainerNode;
 import org.pjsip.pjsua2.Endpoint;
 import org.pjsip.pjsua2.EpConfig;
-import org.pjsip.pjsua2.IpChangeParam;
 import org.pjsip.pjsua2.JsonDocument;
 import org.pjsip.pjsua2.LogConfig;
 import org.pjsip.pjsua2.LogEntry;
@@ -273,7 +272,7 @@ public class MyApp {
 	    System.out.println(e);
 	}
 
-        /* Set SIP port back to default for JSON saved config */
+        /* Set SIP port background_image to default for JSON saved config */
         sipTpConfig.setPort(SIP_PORT);
 
 	/* Create accounts. */
@@ -410,8 +409,6 @@ public class MyApp {
     {
 	try{
 	    System.out.println("Network change detected");
-	    IpChangeParam changeParam = new IpChangeParam();
-	    ep.handleIpChange(changeParam);
 	} catch (Exception e) {
 	    System.out.println(e);
 	}

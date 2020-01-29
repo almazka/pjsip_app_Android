@@ -1,0 +1,22 @@
+R_DEF: Internal format may change without notice
+local
+attr? barAxisColor
+attr? barShowAxis
+attr? barShowAxisLabel
+attr? barShowPopup
+attr? barShowText
+attr? lineAxisColor
+attr? lineBackground
+attr? lineStrokeColor
+attr? lineStrokeSpacing
+attr? lineStrokeWidth
+attr? lineUseDip
+attr? orientation
+attr? pieInnerCircleRatio
+attr? pieSlicePadding
+drawable popup_black
+id horizontal
+id vertical
+styleable BarGraph barAxisColor orientation barShowAxis barShowAxisLabel barShowText barShowPopup
+styleable LineGraph lineStrokeColor lineAxisColor lineStrokeWidth lineStrokeSpacing lineUseDip lineBackground
+styleable PieGraph pieInnerCircleRatio pieSlicePadding

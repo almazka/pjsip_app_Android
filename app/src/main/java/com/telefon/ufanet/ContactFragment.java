@@ -66,7 +66,7 @@ public class ContactFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragmen_contact, container, false);
+        return inflater.inflate(R.layout.fragment_contact, container, false);
     }
 
     @SuppressLint({"StaticFieldLeak", "ResourceAsColor", "WrongViewCast", "CutPasteId"})
@@ -103,7 +103,7 @@ public class ContactFragment extends Fragment {
 
         button_star.setBackgroundColor(getResources().getColor(R.color.background));
         button_worked.setBackgroundColor(getResources().getColor(R.color.background));
-        button_private.setBackgroundResource(R.drawable.background_shadow_bottom);
+        button_private.setBackgroundResource(R.drawable.shadow_bottom);
         button_private.setTextColor(R.color.purple);
         button_worked.setTextColor(R.color.BLACK);
         button_star.setTextColor(R.color.BLACK);
@@ -279,7 +279,7 @@ public class ContactFragment extends Fragment {
             linear_not_found.setVisibility(View.GONE);
             button_star.setBackgroundColor(getResources().getColor(R.color.background));
             button_worked.setBackgroundColor(getResources().getColor(R.color.background));
-            button_private.setBackgroundResource(R.drawable.background_shadow_bottom);
+            button_private.setBackgroundResource(R.drawable.shadow_bottom);
             button_private.setTextColor(R.color.purple);
             button_worked.setTextColor(R.color.BLACK);
             button_star.setTextColor(R.color.BLACK);
@@ -375,7 +375,7 @@ public class ContactFragment extends Fragment {
         public void onClick(View view) {
             button_private.setBackgroundColor(getResources().getColor(R.color.background));
             button_worked.setBackgroundColor(getResources().getColor(R.color.background));
-            button_star.setBackgroundResource(R.drawable.background_shadow_bottom);
+            button_star.setBackgroundResource(R.drawable.shadow_bottom);
             button_star.setTextColor(R.color.purple);
             button_private.setTextColor(R.color.BLACK);
             button_worked.setTextColor(R.color.BLACK);
@@ -462,7 +462,7 @@ public class ContactFragment extends Fragment {
         public void onClick(View view) {
             button_private.setBackgroundColor(getResources().getColor(R.color.background));
             button_star.setBackgroundColor(getResources().getColor(R.color.background));
-            button_worked.setBackgroundResource(R.drawable.background_shadow_bottom);
+            button_worked.setBackgroundResource(R.drawable.shadow_bottom);
             button_star.setTextColor(R.color.BLACK);
             button_private.setTextColor(R.color.BLACK);
             button_worked.setTextColor(R.color.purple);

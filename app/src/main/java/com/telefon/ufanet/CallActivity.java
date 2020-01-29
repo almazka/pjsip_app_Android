@@ -409,7 +409,7 @@ public class CallActivity extends AppCompatActivity
 
 				if (audioManager.isSpeakerphoneOn() == false) {
 					audioManager.setSpeakerphoneOn(true);
-					speaker.setBackground(getResources().getDrawable(R.drawable.speaker2));
+					speaker.setBackground(getResources().getDrawable(R.drawable.headphones));
 				}
 				else {
 					speaker.setBackground(getResources().getDrawable(R.drawable.speaker1));

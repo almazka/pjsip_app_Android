@@ -36,7 +36,8 @@
         </activity>
 
         <activity android:name="com.telefon.ufanet.MVP.View.MainAppActivity"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.telefon.ufanet.CallActivity"

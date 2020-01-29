@@ -69,7 +69,7 @@ public class MissedCallActivity extends AppCompatActivity {
         // ActionBar Settings
         ActionBar bar = getSupportActionBar();
         bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        bar.setCustomView(R.layout.action_bar);
+        bar.setCustomView(R.layout.action_bar_with_backbutton);
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#670094")));
         getSupportActionBar().setElevation(0);
         action_bar_title = (TextView) findViewById(R.id.action_bar_title1);
@@ -81,9 +81,9 @@ public class MissedCallActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.date_dialog_layout);
         dialog2 = new Dialog(this);
         dialog2.setContentView(R.layout.date_dialog_layout);
-        datePicker = dialog.findViewById(R.id.dp) ;
+        datePicker = dialog.findViewById(R.id.datePicker) ;
         button_ok = dialog.findViewById(R.id.button_ok);
-        datePicker2  = dialog2.findViewById(R.id.dp) ;
+        datePicker2  = dialog2.findViewById(R.id.datePicker) ;
         button_ok2 = dialog2.findViewById(R.id.button_ok);
         submit = (Button)findViewById(R.id.prim_missed);
         progress_missed = (ProgressBar) findViewById(R.id.progress_missed);

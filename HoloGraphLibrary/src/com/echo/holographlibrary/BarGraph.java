@@ -249,7 +249,7 @@ public class BarGraph extends View implements HoloGraphAnimate {
         count = 0;
         int oldright = (int) (padding *-1);
         int alpha = 255;//for bar color. Max values is bar.getColorAlpha
-        int popupAlpha = 255;// for bar popup and text. Max value is 255;
+        int popupAlpha = 255;// for bar popup_menu and text. Max value is 255;
         SparseArray<Float> valueTextSizes = new SparseArray<Float>();
         for (final Bar bar : mBars) {
             //Set alpha and width percentage if inserting or deleting
@@ -334,7 +334,7 @@ public class BarGraph extends View implements HoloGraphAnimate {
                         + (mPaint.measureText(bar.getValueString()) / 2)
                         + 10 * resources.getDisplayMetrics().density);
 
-                // Limit popup width to bar width
+                // Limit popup_menu width to bar width
                 if (boundLeft < mBoundsRect.left) {
                     boundLeft = mBoundsRect.left - ((int) padding / 2);
                 }

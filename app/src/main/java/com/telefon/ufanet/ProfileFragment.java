@@ -54,7 +54,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragmen_profile, container, false);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
     Spinner spinner;
@@ -207,7 +207,7 @@ public class ProfileFragment extends Fragment {
             PopupMenu popup = new PopupMenu(getContext(), image_male);
             //Inflating the Popup using xml file
             popup.getMenuInflater()
-                    .inflate(R.menu.popup, popup.getMenu());
+                    .inflate(R.menu.popup_menu, popup.getMenu());
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
                     MyService.DeInit();
@@ -220,7 +220,7 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-            popup.show(); //showing popup
+            popup.show(); //showing popup_menu
         }
     };
 

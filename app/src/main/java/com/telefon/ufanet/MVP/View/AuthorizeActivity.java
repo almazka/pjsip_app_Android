@@ -19,10 +19,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.telefon.ufanet.MVP.Data.AuthorizeData;
+import com.telefon.ufanet.MVP.Data.PrefManager;
 import com.telefon.ufanet.MVP.Interfaces.IAuthActivity;
 import com.telefon.ufanet.MVP.Model.AuthorizeModel;
 import com.telefon.ufanet.MVP.Presenter.AuthorizePresenter;
 import com.telefon.ufanet.R;
+
+import java.util.Set;
 
 
 public class AuthorizeActivity extends AppCompatActivity implements IAuthActivity {
@@ -36,7 +39,7 @@ public class AuthorizeActivity extends AppCompatActivity implements IAuthActivit
     CheckBox checkBox;
     Button buttonLogin;
 
-    RelativeLayout rellay1, rellay2, rel_main;
+    RelativeLayout relative_logo, relative_info, relative_main;
 
     private AuthorizePresenter presenter;
 
@@ -61,12 +64,14 @@ public class AuthorizeActivity extends AppCompatActivity implements IAuthActivit
             window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
 
+        PrefManager manager = PrefManager.getInstance();
+        manager.initPref(getApplication());
         editTextUsername = (EditText) findViewById(R.id.et_login);
         editTextPassword = (EditText) findViewById(R.id.et_pass);
         buttonLogin = (Button) findViewById(R.id.login_btn);
-        rellay1 = (RelativeLayout) findViewById(R.id.relative_logo);
-        rellay2 = (RelativeLayout) findViewById(R.id.relative_info);
-        rel_main = (RelativeLayout) findViewById(R.id.relative_main);
+        relative_logo = (RelativeLayout) findViewById(R.id.relative_logo);
+        relative_info = (RelativeLayout) findViewById(R.id.relative_info);
+        relative_main = (RelativeLayout) findViewById(R.id.relative_main);
         checkBox = (CheckBox) findViewById(R.id.check);
         progressbar = (ProgressBar) findViewById(R.id.progressbar);
 
@@ -74,16 +79,21 @@ public class AuthorizeActivity extends AppCompatActivity implements IAuthActivit
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                rellay1.setVisibility(View.VISIBLE);
-                rellay2.setVisibility(View.VISIBLE);
+                relative_logo.setVisibility(View.VISIBLE);
+                relative_info.setVisibility(View.VISIBLE);
             }
         };
         handler.postDelayed(runnable, 1500);
 
-        rel_main.setOnClickListener(new View.OnClickListener() {
+        AuthorizeModel usersModel = new AuthorizeModel();
+        presenter = new AuthorizePresenter(usersModel);
+        presenter.attachView(this);
+        presenter.viewIsReady(this);
+
+        relative_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               presenter.hideKeyboard(v);
+                presenter.hideKeyboard(v);
             }
         });
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -93,10 +103,6 @@ public class AuthorizeActivity extends AppCompatActivity implements IAuthActivit
             }
         });
 
-        AuthorizeModel usersModel = new AuthorizeModel();
-        presenter = new AuthorizePresenter(usersModel);
-        presenter.attachView(this);
-        presenter.viewIsReady(this);
     }
 
     @Override
@@ -127,7 +133,7 @@ public class AuthorizeActivity extends AppCompatActivity implements IAuthActivit
     }
 
     @Override
-    public void showToast(String type, String msg) {
+    public void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 

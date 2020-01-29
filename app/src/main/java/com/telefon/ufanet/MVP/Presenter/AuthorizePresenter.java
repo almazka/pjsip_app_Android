@@ -42,14 +42,14 @@ public class AuthorizePresenter implements IAuthPresenter {
     public void Login() {
         final AuthorizeData userData = view.getUserData();
         if (TextUtils.isEmpty(userData.getName()) || TextUtils.isEmpty(userData.getPassword())) {
-            view.showToast( "Info" ,"Логин или пароль не могут быть пустыми");
+            view.showToast( "Логин или пароль не могут быть пустыми");
             return;
         }
         if (userData.getChecked()) {
-            model.SaveData(activity, userData.getName(), userData.getPassword());
+            model.SaveData(userData.getName(), userData.getPassword());
         }
         else {
-            model.SaveData(activity, "", "");
+            model.SaveData("", "");
         }
         view.showProgress();
         model.Authorize(userData.getName(), userData.getPassword(), new AuthorizeModel.CompleteCallback() {
@@ -69,7 +69,7 @@ public class AuthorizePresenter implements IAuthPresenter {
                     activity.startActivity(intent);
                 }
                 else {
-                    view.showToast(type, msg);
+                    view.showToast(msg);
                 }
             }
         });
@@ -83,10 +83,10 @@ public class AuthorizePresenter implements IAuthPresenter {
     @Override
     public void viewIsReady(Activity activity) {
         this.activity = activity;
-        view.setUserData(model.LoadData(activity));
+        view.setUserData(model.LoadData());
         Boolean connection = model.isOnline(activity);
         if (!connection) {
-            view.showToast("Info", "Отсутствует соединение с интернетом");
+            view.showToast( "Отсутствует соединение с интернетом");
         }
         final int permissionStatus = ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.READ_CONTACTS);
         final int permissionStatus2 = ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.RECORD_AUDIO);

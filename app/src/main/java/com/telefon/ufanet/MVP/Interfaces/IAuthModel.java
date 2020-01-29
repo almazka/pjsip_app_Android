@@ -9,6 +9,6 @@ public interface IAuthModel {
 
     void Authorize(final String username, String password, final AuthorizeModel.CompleteCallback callback);
     boolean isOnline(Activity activity);
-    AuthorizeData LoadData(Activity activity);
-    void SaveData(Activity activity, String login, String password);
+    AuthorizeData LoadData();
+    void SaveData(String login, String password);
 }
