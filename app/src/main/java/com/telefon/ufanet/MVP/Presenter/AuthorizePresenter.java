@@ -13,13 +13,14 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.telefon.ufanet.MyService;
+import com.telefon.ufanet.MVP.VOIP.Service;
 import com.telefon.ufanet.MVP.Data.AuthorizeData;
 import com.telefon.ufanet.MVP.Interfaces.IAuthPresenter;
 import com.telefon.ufanet.MVP.Model.AuthorizeModel;
 import com.telefon.ufanet.MVP.View.AuthorizeActivity;
 import com.telefon.ufanet.MVP.Interfaces.IAuthActivity;
 import com.telefon.ufanet.MVP.View.MainAppActivity;
+
 
 public class AuthorizePresenter implements IAuthPresenter {
     private static String LOG_TAG = "AuthorizePresenter";
@@ -31,7 +32,6 @@ public class AuthorizePresenter implements IAuthPresenter {
     public AuthorizePresenter(AuthorizeModel model) {
         this.model = model;
     }
-
 
     @Override
     public void attachView(AuthorizeActivity authorizeActivity) {
@@ -58,12 +58,13 @@ public class AuthorizePresenter implements IAuthPresenter {
             public void onComplete(String type, String msg) {
                 view.hideProgress();
                 if (type == "Success") {
-                    Intent serviceIntent = new Intent(activity.getApplicationContext(), MyService.class);
+                    Intent serviceIntent = new Intent(activity.getApplicationContext(), Service.class);
                     serviceIntent.putExtra("sip_login", userData.getSip_user());
                     serviceIntent.putExtra("sip_pass", userData.getSip_password());
                     serviceIntent.putExtra("token", userData.getUser_token());
                     serviceIntent.putExtra("name", userData.getName());
                     activity.startService(serviceIntent);
+
 
                     Intent intent = new Intent(activity.getApplicationContext(), MainAppActivity.class);
                     activity.startActivity(intent);

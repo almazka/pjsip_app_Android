@@ -22,6 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.telefon.ufanet.MVP.VOIP.PJSIPAccount;
+import com.telefon.ufanet.MVP.VOIP.PJSIPCall;
+import com.telefon.ufanet.MVP.VOIP.Service;
+
 import org.pjsip.pjsua2.CallOpParam;
 
 /**
@@ -33,7 +37,7 @@ public class SoftPhoneFragment extends Fragment {
     TextView number_to_call;
     Button delete_button, dial_one, dial_two, dial_three, dial_four, dial_five, dial_six, dial_seven, dial_eight, dial_nine, dial_nol, dial_star, dial_resh, call;
     Animation animAlpha;
-    public static MyAccount account = null;
+    public static PJSIPAccount account = null;
 
     @Nullable
     @Override
@@ -254,16 +258,16 @@ public class SoftPhoneFragment extends Fragment {
     private  View.OnClickListener call_button_listenner = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (MyService.msg_str != null) {
-                if (MyService.msg_str.length() == 0) {
+            if (Service.msg_str != null) {
+                if (Service.msg_str.length() == 0) {
                     Toast.makeText(getContext(), "Необходима SIP регистрация", Toast.LENGTH_LONG).show();
-                } else if (MyService.msg_str.length() == 23) {
+                } else if (Service.msg_str.length() == 23) {
                     
                     if (number_to_call.length() == 0) {
                         Toast.makeText(getContext(), "Введите номер телефона", Toast.LENGTH_LONG).show();
                     } else {
-                        account = MyService.account;
-                        MyCall call = new MyCall(account, -1);
+                        account = Service.account;
+                        PJSIPCall call = new PJSIPCall(account, -1);
                         CallOpParam prm = new CallOpParam(false);
                         try {
                             call.makeCall("sip:" + number_to_call.getText().toString() + "@92.50.152.146:5401", prm);
@@ -273,12 +277,12 @@ public class SoftPhoneFragment extends Fragment {
                             return;
                         }
 
-                        MyService.currentCall = call;
+                        Service.currentCall = call;
                         showCallActivity();
                     }
 
                 } else {
-                    Toast.makeText(getContext(), MyService.msg_str, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), Service.msg_str, Toast.LENGTH_LONG).show();
                 }
             }
         }

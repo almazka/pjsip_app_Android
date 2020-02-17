@@ -1,4 +1,4 @@
-/* $Id: MyApp.java 5361 2016-06-28 14:32:08Z nanang $ */
+/* $Id: PJSIPApp.java 5361 2016-06-28 14:32:08Z nanang $ */
 /*
  * Copyright (C) 2013 Teluu Inc. (http://www.teluu.com)
  *
@@ -16,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-package com.telefon.ufanet;
+package com.telefon.ufanet.MVP.VOIP;
 
 import org.pjsip.pjsua2.AccountConfig;
 import org.pjsip.pjsua2.Buddy;
@@ -42,19 +42,19 @@ import java.util.ArrayList;
 
 
 /* Interface to separate UI & engine a bit better */
-interface MyAppObserver
+interface PJSIPAppObserver
 {
     abstract void notifyRegState(pjsip_status_code code, String reason,
                                  int expiration);
-    abstract void notifyIncomingCall(MyCall call);
-    abstract void notifyCallState(MyCall call);
-    abstract void notifyCallMediaState(MyCall call);
-    abstract void notifyBuddyState(MyBuddy buddy);
+    abstract void notifyIncomingCall(PJSIPCall call);
+    abstract void notifyCallState(PJSIPCall call);
+    abstract void notifyCallMediaState(PJSIPCall call);
+    abstract void notifyBuddyState(PJSIPBuddy buddy);
     abstract void notifyChangeNetwork();
 }
 
 
-class MyLogWriter extends LogWriter
+class PJSIPLogWriter extends LogWriter
 {
     @Override
     public void write(LogEntry entry)
@@ -64,11 +64,11 @@ class MyLogWriter extends LogWriter
 }
 
 
-class MyBuddy extends Buddy
+class PJSIPBuddy extends Buddy
 {
     public BuddyConfig cfg;
 
-    MyBuddy(BuddyConfig config)
+    PJSIPBuddy(BuddyConfig config)
     {
 	super();
 	cfg = config;
@@ -107,13 +107,13 @@ class MyBuddy extends Buddy
     @Override
     public void onBuddyState()
     {
-	MyApp.observer.notifyBuddyState(this);
+	PJSIPApp.observer.notifyBuddyState(this);
     }
 
 }
 
 
-class MyAccountConfig
+class PJSIPAccountConfig
 {
     public AccountConfig accCfg = new AccountConfig();
     public ArrayList<BuddyConfig> buddyCfgs = new ArrayList<BuddyConfig>();
@@ -147,7 +147,7 @@ class MyAccountConfig
 }
 
 
-public class MyApp {
+public class PJSIPApp {
     static {
 	try{
 	    System.loadLibrary("openh264");
@@ -163,23 +163,23 @@ public class MyApp {
     }
 
     public static Endpoint ep = new Endpoint();
-    public static MyAppObserver observer;
-    public ArrayList<MyAccount> accList = new ArrayList<MyAccount>();
+    public static PJSIPAppObserver observer;
+    public ArrayList<PJSIPAccount> accList = new ArrayList<PJSIPAccount>();
 
-    private ArrayList<MyAccountConfig> accCfgs =
-					  new ArrayList<MyAccountConfig>();
+    private ArrayList<PJSIPAccountConfig> accCfgs =
+					  new ArrayList<PJSIPAccountConfig>();
     private EpConfig epConfig = new EpConfig();
     private TransportConfig sipTpConfig = new TransportConfig();
     private String appDir;
 
     /* Maintain reference to log writer to avoid premature cleanup by GC */
-    private MyLogWriter logWriter;
+    private PJSIPLogWriter logWriter;
 
     private final String configName = "pjsua2.json";
     private final int SIP_PORT  = 0;
     private final int LOG_LEVEL = 4;
 
-    public void init(MyAppObserver obs, String app_dir)
+    public void init(PJSIPAppObserver obs, String app_dir)
     {
 		try {
 			init(obs, app_dir, false);
@@ -188,8 +188,8 @@ public class MyApp {
 		}
 	}
 
-    public void init(MyAppObserver obs, String app_dir,
-		     boolean own_worker_thread) throws Exception {
+    public void init(PJSIPAppObserver obs, String app_dir,
+					 boolean own_worker_thread) throws Exception {
 	observer = obs;
 	appDir = app_dir;
 
@@ -217,7 +217,7 @@ public class MyApp {
 
 	/* Set log config. */
 	LogConfig log_cfg = epConfig.getLogConfig();
-	logWriter = new MyLogWriter();
+	logWriter = new PJSIPLogWriter();
 	log_cfg.setWriter(logWriter);
 	log_cfg.setDecor(log_cfg.getDecor() &
 			 ~(pj_log_decoration.PJ_LOG_HAS_CR.swigValue() |
@@ -277,7 +277,7 @@ public class MyApp {
 
 	/* Create accounts. */
 	for (int i = 0; i < accCfgs.size(); i++) {
-	    MyAccountConfig my_cfg = accCfgs.get(i);
+	    PJSIPAccountConfig my_cfg = accCfgs.get(i);
 
 	    /* Customize account config */
 	    my_cfg.accCfg.getNatConfig().setIceEnabled(true);
@@ -285,7 +285,7 @@ public class MyApp {
 	    my_cfg.accCfg.getVideoConfig().setAutoShowIncoming(true);
 
 
-	    MyAccount acc = addAcc(my_cfg.accCfg);
+	    PJSIPAccount acc = addAcc(my_cfg.accCfg);
 	    if (acc == null)
 		continue;
 
@@ -304,9 +304,9 @@ public class MyApp {
 	}
     }
 
-    public MyAccount addAcc(AccountConfig cfg)
+    public PJSIPAccount addAcc(AccountConfig cfg)
     {
-	MyAccount acc = new MyAccount(cfg);
+	PJSIPAccount acc = new PJSIPAccount(cfg);
 	try {
 	    acc.create(cfg);
 	} catch (Exception e) {
@@ -318,7 +318,7 @@ public class MyApp {
 	return acc;
     }
 
-    public void delAcc(MyAccount acc)
+    public void delAcc(PJSIPAccount acc)
     {
 	accList.remove(acc);
     }
@@ -343,7 +343,7 @@ public class MyApp {
 	    accCfgs.clear();
 	    ContainerNode accs_node = root.readArray("accounts");
 	    while (accs_node.hasUnread()) {
-		MyAccountConfig acc_cfg = new MyAccountConfig();
+		PJSIPAccountConfig acc_cfg = new PJSIPAccountConfig();
 		acc_cfg.readObject(accs_node);
 		accCfgs.add(acc_cfg);
 	    }
@@ -362,13 +362,13 @@ public class MyApp {
 	/* Sync accCfgs from accList */
 	accCfgs.clear();
 	for (int i = 0; i < accList.size(); i++) {
-	    MyAccount acc = accList.get(i);
-	    MyAccountConfig my_acc_cfg = new MyAccountConfig();
+	    PJSIPAccount acc = accList.get(i);
+	    PJSIPAccountConfig my_acc_cfg = new PJSIPAccountConfig();
 	    my_acc_cfg.accCfg = acc.cfg;
 
 	    my_acc_cfg.buddyCfgs.clear();
 	    for (int j = 0; j < acc.buddyList.size(); j++) {
-		MyBuddy bud = acc.buddyList.get(j);
+		PJSIPBuddy bud = acc.buddyList.get(j);
 		my_acc_cfg.buddyCfgs.add(bud.cfg);
 	    }
 

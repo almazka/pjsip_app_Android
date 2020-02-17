@@ -21,6 +21,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.telefon.ufanet.MVP.VOIP.PJSIPCall;
+import com.telefon.ufanet.MVP.VOIP.Service;
+
 import org.pjsip.pjsua2.CallOpParam;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -131,15 +134,15 @@ public class RecentFragment extends Fragment {
             call_number = call_number.replace("+7", "8");
             call_number = call_number.replaceAll("[^0-9]", "");
 
-            if (MyService.msg_str.length() == 0) {
+            if (Service.msg_str.length() == 0) {
                 Toast.makeText(getContext(), "Необходима SIP регистрация", Toast.LENGTH_LONG).show();
-            } else if (MyService.msg_str.length() == 23) {
+            } else if (Service.msg_str.length() == 23) {
 
                 if (call_number.length() == 0) {
                     Toast.makeText(getContext(), "Введите номер телефона", Toast.LENGTH_LONG).show();
                 } else {
-                    SoftPhoneFragment.account = MyService.account;
-                    MyCall call = new MyCall(SoftPhoneFragment.account, -1);
+                    SoftPhoneFragment.account = Service.account;
+                    PJSIPCall call = new PJSIPCall(SoftPhoneFragment.account, -1);
                     CallOpParam prm = new CallOpParam(false);
                     try {
                         switch (MainApp.vatsChecked.length()) {
@@ -152,12 +155,12 @@ public class RecentFragment extends Fragment {
                         call.delete();
                         return;
                     }
-                    MyService.currentCall = call;
+                    Service.currentCall = call;
                     showCallActivity();
                 }
 
             } else {
-                Toast.makeText(getContext(), MyService.msg_str, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), Service.msg_str, Toast.LENGTH_LONG).show();
             }
 
         }

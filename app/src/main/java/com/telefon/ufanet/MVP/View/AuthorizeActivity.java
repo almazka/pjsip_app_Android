@@ -25,8 +25,6 @@ import com.telefon.ufanet.MVP.Model.AuthorizeModel;
 import com.telefon.ufanet.MVP.Presenter.AuthorizePresenter;
 import com.telefon.ufanet.R;
 
-import java.util.Set;
-
 
 public class AuthorizeActivity extends AppCompatActivity implements IAuthActivity {
 
@@ -47,11 +45,12 @@ public class AuthorizeActivity extends AppCompatActivity implements IAuthActivit
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.authorize_activity);
-        Log.d("Tag", "Auth OnCreate");
+        Log.d(LOG_TAG, "OnCreate");
         init();
     }
 
-    private void init() {
+    @Override
+    public void init() {
         androidx.appcompat.app.ActionBar bar = getSupportActionBar();
         bar.hide();
         View decorView = getWindow().getDecorView();

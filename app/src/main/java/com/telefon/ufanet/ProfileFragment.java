@@ -31,6 +31,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.telefon.ufanet.MVP.VOIP.Service;
 import com.telefon.ufanet.MVP.View.AuthorizeActivity;
 
 import org.apache.http.client.ClientProtocolException;
@@ -210,8 +212,8 @@ public class ProfileFragment extends Fragment {
                     .inflate(R.menu.popup_menu, popup.getMenu());
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
-                    MyService.DeInit();
-                    getActivity().stopService(new Intent(getContext(), MyService.class));
+                    Service.DeInit();
+                    getActivity().stopService(new Intent(getContext(), Service.class));
                     getActivity().finishAffinity();
                     Intent i = new Intent(getContext(), AuthorizeActivity.class);
                     i.putExtra("unreg", "true");
@@ -315,8 +317,8 @@ public class ProfileFragment extends Fragment {
             return new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MyService.DeInit();
-                    getActivity().stopService(new Intent(getContext(), MyService.class));
+                    Service.DeInit();
+                    getActivity().stopService(new Intent(getContext(), Service.class));
                     Handler handler3 = new Handler();
                     handler3.postDelayed(new Runnable() {
                         @Override

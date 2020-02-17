@@ -46,7 +46,7 @@
             android:taskAffinity=""
             android:excludeFromRecents="true"/>
 
-        <service android:name="com.telefon.ufanet.MyService" />
+        <service android:name="com.telefon.ufanet.MVP.VOIP.Service" />
 
         <activity android:name="com.telefon.ufanet.PlayerActivity" />
         <activity

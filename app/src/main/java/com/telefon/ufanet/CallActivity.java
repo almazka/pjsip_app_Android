@@ -1,21 +1,3 @@
-/* $Id: CallActivity.java 5138 2015-07-30 06:23:35Z ming $ */
-/*
- * Copyright (C) 2013 Teluu Inc. (http://www.teluu.com)
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
 package com.telefon.ufanet;
 
 import android.annotation.SuppressLint;
@@ -45,8 +27,6 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -57,11 +37,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.telefon.ufanet.MVP.VOIP.PJSIPApp;
+import com.telefon.ufanet.MVP.VOIP.Service;
+
 import org.pjsip.pjsua2.AccountConfig;
 import org.pjsip.pjsua2.CallInfo;
 import org.pjsip.pjsua2.CallOpParam;
-import org.pjsip.pjsua2.VideoPreviewOpParam;
-import org.pjsip.pjsua2.VideoWindowHandle;
 import org.pjsip.pjsua2.pjmedia_orient;
 import org.pjsip.pjsua2.pjsip_inv_state;
 import org.pjsip.pjsua2.pjsip_role_e;
@@ -71,68 +52,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-class VideoPreviewHandler implements SurfaceHolder.Callback
-{
-	public boolean videoPreviewActive = false;
 
-
-
-	public void updateVideoPreview(SurfaceHolder holder)
-	{
-		if (MyService.currentCall != null &&
-				MyService.currentCall.vidWin != null &&
-				MyService.currentCall.vidPrev != null)
-		{
-			if (videoPreviewActive) {
-				VideoWindowHandle vidWH = new VideoWindowHandle();
-				vidWH.getHandle().setWindow(holder.getSurface());
-				VideoPreviewOpParam vidPrevParam = new VideoPreviewOpParam();
-				vidPrevParam.setWindow(vidWH);
-				try {
-					MyService.currentCall.vidPrev.start(vidPrevParam);
-				} catch (Exception e) {
-					System.out.println(e);
-				}
-			} else {
-				try {
-					MyService.currentCall.vidPrev.stop();
-				} catch (Exception e) {
-					System.out.println(e);
-				}
-			}
-		}
-	}
-
-	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int w, int h)
-	{
-		updateVideoPreview(holder);
-	}
-
-	@Override
-	public void surfaceCreated(SurfaceHolder holder)
-	{
-
-	}
-
-	@Override
-	public void surfaceDestroyed(SurfaceHolder holder)
-	{
-		try {
-			MyService.currentCall.vidPrev.stop();
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-}
 
 public class CallActivity extends AppCompatActivity
 		implements Handler.Callback
 {
 
 	public static Handler handler_;
-	private static VideoPreviewHandler previewHandler =
-			new VideoPreviewHandler();
 
 	private final Handler handler = new Handler(this);
 	private static CallInfo lastCallInfo;
@@ -206,7 +132,7 @@ public class CallActivity extends AppCompatActivity
 				prm.setStatusCode(pjsip_status_code.PJSIP_SC_OK);
 //
 				try {
-					MyService.currentCall.answer(prm);
+					Service.currentCall.answer(prm);
 					ring.stop();
 				} catch (Exception e) {
 					System.out.println(e);
@@ -226,11 +152,11 @@ public class CallActivity extends AppCompatActivity
 				handler_ = null;
 				i1.setVisibility(View.GONE);
 
-				if (MyService.currentCall != null) {
+				if (Service.currentCall != null) {
 					CallOpParam prm = new CallOpParam();
 					prm.setStatusCode(pjsip_status_code.PJSIP_SC_DECLINE);
 					try {
-						MyService.currentCall.hangup(prm);
+						Service.currentCall.hangup(prm);
 						vibrator.cancel();
 						ring.stop();
 						//imageView3.setVisibility(View.GONE);
@@ -295,8 +221,8 @@ public class CallActivity extends AppCompatActivity
 		}
 
 
-		if (MyService.currentCall == null ||
-				MyService.currentCall.vidWin == null)
+		if (Service.currentCall == null ||
+				Service.currentCall.vidWin == null)
 		{
 
 		}
@@ -389,9 +315,9 @@ public class CallActivity extends AppCompatActivity
 		audioManager.setSpeakerphoneOn(false);
 
 		handler_ = handler;
-		if (MyService.currentCall != null) {
+		if (Service.currentCall != null) {
 			try {
-				lastCallInfo = MyService.currentCall.getInfo();
+				lastCallInfo = Service.currentCall.getInfo();
 				if (lastCallInfo != null) {
 					updateCallState(lastCallInfo);
 				}
@@ -477,11 +403,11 @@ public class CallActivity extends AppCompatActivity
 				orient = pjmedia_orient.PJMEDIA_ORIENT_UNKNOWN;
 		}
 
-		if (MyApp.ep != null && MyService.account != null) {
+		if (PJSIPApp.ep != null && Service.account != null) {
 			try {
-				AccountConfig cfg = MyService.account.cfg;
+				AccountConfig cfg = Service.account.cfg;
 				int cap_dev = cfg.getVideoConfig().getDefaultCaptureDevice();
-				MyApp.ep.vidDevManager().setCaptureOrient(cap_dev, orient,
+				PJSIPApp.ep.vidDevManager().setCaptureOrient(cap_dev, orient,
 						true);
 			} catch (Exception e) {
 				System.out.println(e);
@@ -503,7 +429,7 @@ public class CallActivity extends AppCompatActivity
 		CallOpParam prm = new CallOpParam();
 		prm.setStatusCode(pjsip_status_code.PJSIP_SC_OK);
 		try {
-			MyService.currentCall.answer(prm);
+			Service.currentCall.answer(prm);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -517,12 +443,12 @@ public class CallActivity extends AppCompatActivity
 		Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 		handler_ = null;
 
-		if (MyService.currentCall != null) {
+		if (Service.currentCall != null) {
 			CallOpParam prm = new CallOpParam();
 			prm.setStatusCode(pjsip_status_code.PJSIP_SC_DECLINE);
 			try {
 
-				MyService.currentCall.hangup(prm);
+				Service.currentCall.hangup(prm);
 				vibrator.cancel();
 				long callTimeInMiliSecond = System.currentTimeMillis();
 				String numberStr = remoteURI;
@@ -566,11 +492,11 @@ public class CallActivity extends AppCompatActivity
 			Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 			handler_ = null;
 
-			if (MyService.currentCall != null) {
+			if (Service.currentCall != null) {
 				CallOpParam prm = new CallOpParam();
 				prm.setStatusCode(pjsip_status_code.PJSIP_SC_DECLINE);
 				try {
-					MyService.currentCall.hangup(prm);
+					Service.currentCall.hangup(prm);
 					vibrator.cancel();
 				} catch (Exception e) {
 					System.out.println(e);
@@ -589,11 +515,11 @@ public class CallActivity extends AppCompatActivity
 		Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 		handler_ = null;
 
-		if (MyService.currentCall != null) {
+		if (Service.currentCall != null) {
 			CallOpParam prm = new CallOpParam();
 			prm.setStatusCode(pjsip_status_code.PJSIP_SC_DECLINE);
 			try {
-				MyService.currentCall.hangup(prm);
+				Service.currentCall.hangup(prm);
 				vibrator.cancel();
 				long callTimeInMiliSecond = System.currentTimeMillis();
 				String numberStr = remoteURI;
@@ -625,28 +551,17 @@ public class CallActivity extends AppCompatActivity
 		finish();
 	}
 
-	public void setupVideoPreview(SurfaceView surfacePreview,
-								  Button buttonShowPreview)
-	{
-		surfacePreview.setVisibility(previewHandler.videoPreviewActive?
-				View.VISIBLE: View.GONE);
-
-		buttonShowPreview.setText(previewHandler.videoPreviewActive?
-				"Hide preview":"Show Preview");
-	}
-
-
 	@Override
 	public boolean handleMessage(Message m)
 	{
-		if (m.what == MyService.MSG_TYPE.CALL_STATE) {
+		if (m.what == Service.MSG_TYPE.CALL_STATE) {
 
 			lastCallInfo = (CallInfo) m.obj;
 			updateCallState(lastCallInfo);
 
-		} else if (m.what == MyService.MSG_TYPE.CALL_MEDIA_STATE) {
+		} else if (m.what == Service.MSG_TYPE.CALL_MEDIA_STATE) {
 
-			if (MyService.currentCall.vidWin != null) {
+			if (Service.currentCall.vidWin != null) {
 		/* Set capture orientation according to current
 		 * device orientation.
 		 */
@@ -681,9 +596,9 @@ public class CallActivity extends AppCompatActivity
 		remoteURI = remoteURI.substring(0, num);
 		tvNamePeer.setText("");
 
-		for (int i = 0; i < MyService.contactListWorker.size(); i++ ) {
-			if (remoteURI.contains(MyService.contactListWorker.get(i).mail)) {
-			    String namecontact = MyService.contactListWorker.get(i).header;
+		for (int i = 0; i < Service.contactListWorker.size(); i++ ) {
+			if (remoteURI.contains(Service.contactListWorker.get(i).mail)) {
+			    String namecontact = Service.contactListWorker.get(i).header;
 				tvNamePeer.setText(namecontact);
 				break;
 			}

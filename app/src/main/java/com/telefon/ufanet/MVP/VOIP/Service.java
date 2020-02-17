@@ -1,8 +1,7 @@
-package com.telefon.ufanet;
+package com.telefon.ufanet.MVP.VOIP;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +16,11 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
-import androidx.core.app.NotificationCompat;;
+import androidx.core.app.NotificationCompat;
+import com.telefon.ufanet.CallActivity;
+import com.telefon.ufanet.ItemContactsWorkers;
+import com.telefon.ufanet.R;
+
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -43,12 +46,12 @@ import java.util.HashMap;
  * Created by sadretdinov_a1109 on 04.07.2018.
  */
 
-public class MyService extends Service
-        implements Handler.Callback, MyAppObserver {
+public class Service extends android.app.Service
+        implements Handler.Callback, PJSIPAppObserver {
 
-    public static MyApp app = null;
-    public static MyCall currentCall = null;
-    public static MyAccount account = null;
+    public static PJSIPApp app = null;
+    public static PJSIPCall currentCall = null;
+    public static PJSIPAccount account = null;
     public static AccountConfig accCfg = null;
     public static String msg_str;
 
@@ -89,8 +92,8 @@ public class MyService extends Service
         } else {
 
             if (app == null) {
-                app = new MyApp();
-                //  Wait for GDB to init, for native debugging only
+                app = new PJSIPApp();
+                 // Wait for GDB to init, for native debugging only
                 if (false &&
                         (getApplicationInfo().flags &
                                 ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
@@ -176,7 +179,7 @@ public class MyService extends Service
         if (m.what == 0) {
             app.deinit();
             Runtime.getRuntime().gc();
-            stopService(new Intent(this, MyService.class));
+            stopService(new Intent(this, Service.class));
             android.os.Process.killProcess(android.os.Process.myPid());
         } else if (m.what == MSG_TYPE.CALL_STATE) {
             CallInfo ci = (CallInfo) m.obj;
@@ -209,7 +212,7 @@ public class MyService extends Service
         } else if (m.what == MSG_TYPE.INCOMING_CALL) {
 
 	    /* Incoming call */
-            final MyCall call = (MyCall) m.obj;
+            final PJSIPCall call = (PJSIPCall) m.obj;
             CallOpParam prm = new CallOpParam();
 
 	    /* Only one call at anytime */
@@ -250,7 +253,7 @@ public class MyService extends Service
 
 
 
-    public void notifyIncomingCall(MyCall call)
+    public void notifyIncomingCall(PJSIPCall call)
     {
         Message m = Message.obtain(handler, MSG_TYPE.INCOMING_CALL, call);
         m.sendToTarget();
@@ -274,7 +277,7 @@ public class MyService extends Service
         m.sendToTarget();
     }
 
-    public void notifyCallState(MyCall call)
+    public void notifyCallState(PJSIPCall call)
     {
         if (currentCall == null || call.getId() != currentCall.getId())
             return;
@@ -295,13 +298,13 @@ public class MyService extends Service
         }
     }
 
-    public void notifyCallMediaState(MyCall call)
+    public void notifyCallMediaState(PJSIPCall call)
     {
         Message m = Message.obtain(handler, MSG_TYPE.CALL_MEDIA_STATE, null);
         m.sendToTarget();
     }
 
-    public void notifyBuddyState(MyBuddy buddy)
+    public void notifyBuddyState(PJSIPBuddy buddy)
     {
         Message m = Message.obtain(handler, MSG_TYPE.BUDDY_STATE, buddy);
         m.sendToTarget();
@@ -367,7 +370,7 @@ public class MyService extends Service
 
     public void ReRegister() {
         if (app == null) {
-            app = new MyApp();
+            app = new PJSIPApp();
             // Wait for GDB to init, for native debugging only
             if (false &&
                     (getApplicationInfo().flags &

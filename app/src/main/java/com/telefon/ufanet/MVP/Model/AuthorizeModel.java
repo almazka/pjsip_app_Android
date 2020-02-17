@@ -2,7 +2,6 @@ package com.telefon.ufanet.MVP.Model;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;

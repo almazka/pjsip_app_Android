@@ -2,7 +2,7 @@ package com.telefon.ufanet.MVP.Data;
 
 import java.util.List;
 
-class Num {
+class Number {
     public String sip_login = "";
     public String sip_password = "";
     public String getSip_login() {return  sip_login;}
@@ -10,7 +10,7 @@ class Num {
 }
 
 public class Sip {
-    List<Num> numbers;
+    List<Number> numbers;
     public String getSipLogin() {
         return  numbers.get(0).getSip_login();
     }

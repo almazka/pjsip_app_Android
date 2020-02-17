@@ -34,6 +34,9 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.telefon.ufanet.MVP.VOIP.PJSIPAccount;
+import com.telefon.ufanet.MVP.VOIP.PJSIPCall;
+import com.telefon.ufanet.MVP.VOIP.Service;
 
 
 import org.apache.http.client.ClientProtocolException;
@@ -234,15 +237,15 @@ public class ContactFragment extends Fragment {
                     contact_number = contact_number.replace("+7", "8");
                     contact_number = contact_number.replaceAll("[^0-9]", "");
                     String call_contact_name = contactList.get(position).getHeader().toString();
-                    if (MyService.msg_str.length() == 0) {
+                    if (Service.msg_str.length() == 0) {
                         Toast.makeText(getContext(), "Необходима SIP регистрация", Toast.LENGTH_LONG).show();
-                    } else if (MyService.msg_str.length() == 23) {
+                    } else if (Service.msg_str.length() == 23) {
 
                         if (contact_number.length() == 0) {
                             Toast.makeText(getContext(), "Введите номер телефона", Toast.LENGTH_LONG).show();
                         } else {
-                            MyAccount account = MyService.account;
-                            MyCall call = new MyCall(account, -1);
+                            PJSIPAccount account = Service.account;
+                            PJSIPCall call = new PJSIPCall(account, -1);
                             CallOpParam prm = new CallOpParam(false);
                             try {
                                 switch (MainApp.vatsChecked.length()) {
@@ -256,11 +259,11 @@ public class ContactFragment extends Fragment {
                                 call.delete();
                                 return;
                             }
-                            MyService.currentCall = call;
+                            Service.currentCall = call;
                             showCallActivity();
                         }
                     } else {
-                        Toast.makeText(getContext(), MyService.msg_str, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), Service.msg_str, Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -303,15 +306,15 @@ public class ContactFragment extends Fragment {
                     contact_number_worker = contact_number_worker.replaceAll("[^0-9]", "");
                     String call_contact_name = contactListWorker.get(position).getHeader().toString();
 
-                    if (MyService.msg_str.length() == 0) {
+                    if (Service.msg_str.length() == 0) {
                         Toast.makeText(getContext(), "Необходима SIP регистрация", Toast.LENGTH_LONG).show();
-                    } else if (MyService.msg_str.length() == 23) {
+                    } else if (Service.msg_str.length() == 23) {
 
                         if (contact_number_worker.length() == 0) {
                             Toast.makeText(getContext(), "Введите номер телефона", Toast.LENGTH_LONG).show();
                         } else {
-                            MyAccount account = MyService.account;
-                            MyCall call = new MyCall(account, -1);
+                            PJSIPAccount account = Service.account;
+                            PJSIPCall call = new PJSIPCall(account, -1);
                             CallOpParam prm = new CallOpParam(false);
                             try {
                                 call.makeCall("sip:" + contact_number_worker.toString() + "@92.50.152.146:5401", prm);
@@ -319,12 +322,12 @@ public class ContactFragment extends Fragment {
                                 call.delete();
                                 return;
                             }
-                            MyService.currentCall = call;
+                            Service.currentCall = call;
                             showCallActivity();
                         }
 
                     } else {
-                        Toast.makeText(getContext(), MyService.msg_str, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), Service.msg_str, Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -426,14 +429,14 @@ public class ContactFragment extends Fragment {
                     contact_number_star = contact_number_star.replaceAll("[^0-9]", "");
                     String call_contact_name = contactList_star.get(position).getHeader().toString();
 
-                    if (MyService.msg_str.length() == 0) {
+                    if (Service.msg_str.length() == 0) {
                         Toast.makeText(getContext(), "Необходима SIP регистрация", Toast.LENGTH_LONG).show();
-                    } else if (MyService.msg_str.length() == 23) {
+                    } else if (Service.msg_str.length() == 23) {
                         if (contact_number_star.length() == 0) {
                             Toast.makeText(getContext(), "Введите номер телефона", Toast.LENGTH_LONG).show();
                         } else {
-                            MyAccount account = MyService.account;
-                            MyCall call = new MyCall(account, -1);
+                            PJSIPAccount account = Service.account;
+                            PJSIPCall call = new PJSIPCall(account, -1);
                             CallOpParam prm = new CallOpParam(false);
                             try {
                                 call.makeCall("sip:" + contact_number_star.toString() + "@92.50.152.146:5401", prm);
@@ -441,12 +444,12 @@ public class ContactFragment extends Fragment {
                                 call.delete();
                                 return;
                             }
-                            MyService.currentCall = call;
+                            Service.currentCall = call;
                             showCallActivity();
                         }
 
                     } else {
-                        Toast.makeText(getContext(), MyService.msg_str, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), Service.msg_str, Toast.LENGTH_LONG).show();
                     }
                 }
             }, 5);
@@ -470,7 +473,7 @@ public class ContactFragment extends Fragment {
             linear_star.setVisibility(View.GONE);
             linear_contacts.setVisibility(View.GONE);
             linear_workers.setVisibility(View.VISIBLE);
-            MyService.GetContacts();
+            Service.GetContacts();
             progress_load_workers.setVisibility(View.VISIBLE);
 
 

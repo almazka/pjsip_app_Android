@@ -1,4 +1,4 @@
-package com.telefon.ufanet;
+package com.telefon.ufanet.MVP.VOIP;
 
 import org.pjsip.pjsua2.Account;
 import org.pjsip.pjsua2.AccountConfig;
@@ -9,21 +9,21 @@ import org.pjsip.pjsua2.OnRegStateParam;
 
 import java.util.ArrayList;
 
-public class MyAccount extends Account
+public class PJSIPAccount extends Account
 {
-    public ArrayList<MyBuddy> buddyList = new ArrayList<MyBuddy>();
+    public ArrayList<PJSIPBuddy> buddyList = new ArrayList<PJSIPBuddy>();
     public AccountConfig cfg;
 
-    MyAccount(AccountConfig config)
+    PJSIPAccount(AccountConfig config)
     {
 	super();
 	cfg = config;
     }
 
-    public MyBuddy addBuddy(BuddyConfig bud_cfg)
+    public PJSIPBuddy addBuddy(BuddyConfig bud_cfg)
     {
 	/* Create Buddy */
-	MyBuddy bud = new MyBuddy(bud_cfg);
+	PJSIPBuddy bud = new PJSIPBuddy(bud_cfg);
 	try {
 	    bud.create(this, bud_cfg);
 	} catch (Exception e) {
@@ -42,7 +42,7 @@ public class MyAccount extends Account
 	return bud;
     }
 
-    public void delBuddy(MyBuddy buddy)
+    public void delBuddy(PJSIPBuddy buddy)
     {
 	buddyList.remove(buddy);
 	buddy.delete();
@@ -50,7 +50,7 @@ public class MyAccount extends Account
 
     public void delBuddy(int index)
     {
-	MyBuddy bud = buddyList.get(index);
+	PJSIPBuddy bud = buddyList.get(index);
 	buddyList.remove(index);
 	bud.delete();
     }
@@ -58,7 +58,7 @@ public class MyAccount extends Account
     @Override
     public void onRegState(OnRegStateParam prm)
     {
-        MyApp.observer.notifyRegState(prm.getCode(), prm.getReason(),
+        PJSIPApp.observer.notifyRegState(prm.getCode(), prm.getReason(),
 				      prm.getExpiration());
     }
 
@@ -66,8 +66,8 @@ public class MyAccount extends Account
     public void onIncomingCall(OnIncomingCallParam prm)
     {
 	System.out.println("======== Incoming call ======== ");
-	MyCall call = new MyCall(this, prm.getCallId());
-	MyApp.observer.notifyIncomingCall(call);
+	PJSIPCall call = new PJSIPCall(this, prm.getCallId());
+	PJSIPApp.observer.notifyIncomingCall(call);
     }
 
     @Override

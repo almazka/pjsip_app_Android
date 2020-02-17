@@ -1,4 +1,4 @@
-package com.telefon.ufanet;
+package com.telefon.ufanet.MVP.VOIP;
 
 import org.pjsip.pjsua2.AudioMedia;
 import org.pjsip.pjsua2.Call;
@@ -15,12 +15,12 @@ import org.pjsip.pjsua2.pjsip_inv_state;
 import org.pjsip.pjsua2.pjsua2;
 import org.pjsip.pjsua2.pjsua_call_media_status;
 
-public class MyCall extends Call
+public class PJSIPCall extends Call
 {
     public VideoWindow vidWin;
     public VideoPreview vidPrev;
 
-    public MyCall(MyAccount acc, int call_id)
+    public PJSIPCall(PJSIPAccount acc, int call_id)
     {
 	super(acc, call_id);
 	vidWin = null;
@@ -29,13 +29,13 @@ public class MyCall extends Call
     @Override
     public void onCallState(OnCallStateParam prm)
     {
-	    MyApp.observer.notifyCallState(this);
+	    PJSIPApp.observer.notifyCallState(this);
 	    try {
 		CallInfo ci = getInfo();
 		if (ci.getState() ==
 		    pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED)
 		{
-		    MyApp.ep.utilLogWrite(3, "MyCall", this.dump(true, ""));
+		    PJSIPApp.ep.utilLogWrite(3, "PJSIPCall", this.dump(true, ""));
 		    this.delete();
 		}
 	    } catch (Exception e) {
@@ -70,9 +70,9 @@ public class MyCall extends Call
 
 		// connect ports
 		try {
-		    MyApp.ep.audDevManager().getCaptureDevMedia().
+		    PJSIPApp.ep.audDevManager().getCaptureDevMedia().
 							    startTransmit(am);
-		    am.startTransmit(MyApp.ep.audDevManager().
+		    am.startTransmit(PJSIPApp.ep.audDevManager().
 				     getPlaybackDevMedia());
 		} catch (Exception e) {
 		    continue;
@@ -87,6 +87,6 @@ public class MyCall extends Call
 	    }
 	}
 
-	MyApp.observer.notifyCallMediaState(this);
+	PJSIPApp.observer.notifyCallMediaState(this);
     }
 }

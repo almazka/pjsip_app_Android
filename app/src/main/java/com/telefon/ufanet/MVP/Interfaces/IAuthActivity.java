@@ -13,5 +13,6 @@ public interface IAuthActivity {
     void showToast(String msg);
     void showExplanation(String title, String message);
     void hideKeyboard(View v);
+    void init();
 
 }
