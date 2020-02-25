@@ -156,8 +156,8 @@ public class Service extends android.app.Service
             registerReceiver(mBatInfoReceiver, new IntentFilter(
                     ConnectivityManager.CONNECTIVITY_ACTION));
 
-        }
 
+        }
 
         return START_REDELIVER_INTENT;
     }

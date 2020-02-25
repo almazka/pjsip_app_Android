@@ -8,11 +8,9 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import com.telefon.ufanet.MVP.VOIP.Service;
 import com.telefon.ufanet.MVP.Data.AuthorizeData;
 import com.telefon.ufanet.MVP.Interfaces.IAuthPresenter;

@@ -95,6 +95,13 @@ public class MainAppActivity extends AppCompatActivity implements IMainAppActivi
             date_to[0] = year + "-" + month + "-" + day + " 23:59:59";
         }
 
+
+        try {
+            Endpoint.instance().codecSetPriority("PCMA/8000", (short) 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         try {
             Endpoint.instance().codecSetPriority("speex/16000", (short) 0);
         } catch (Exception e) {
@@ -119,7 +126,7 @@ public class MainAppActivity extends AppCompatActivity implements IMainAppActivi
         }
 
         try {
-            Endpoint.instance().codecSetPriority("PCMA/8000", (short) 1);
+            Endpoint.instance().codecSetPriority("PCMU/8000", (short) 0);
         } catch (Exception e) {
             e.printStackTrace();
         }

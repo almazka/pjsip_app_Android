@@ -414,7 +414,59 @@ public class PJSIPApp {
 	}
     }
 
-    public void deinit()
+    public void setPCMA () {
+		try {
+			Endpoint.instance().codecSetPriority("PCMA/8000", (short) 1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			Endpoint.instance().codecSetPriority("PCMU/8000", (short) 2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setILBC() {
+		try {
+			Endpoint.instance().codecSetPriority("PCMA/8000", (short) 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			Endpoint.instance().codecSetPriority("speex/16000", (short) 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			Endpoint.instance().codecSetPriority("speex/8000", (short) 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			Endpoint.instance().codecSetPriority("speex/32000", (short) 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			Endpoint.instance().codecSetPriority("GSM/8000", (short) 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			Endpoint.instance().codecSetPriority("PCMU/8000", (short) 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+
+	public void deinit()
     {
 	String configPath = appDir + "/" + configName;
 	saveConfig(configPath);

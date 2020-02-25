@@ -20,11 +20,11 @@ public class Token {
        return token_type;
    }
 
-    public Token(String access_token, String token_type) {
+    public Token (String access_token, String token_type) {
         this.access_token = access_token;
         this.token_type = token_type;
     }
 
-    public Token() {
+    public Token () {
     }
 }
