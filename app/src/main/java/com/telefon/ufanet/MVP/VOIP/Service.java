@@ -42,9 +42,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by sadretdinov_a1109 on 04.07.2018.
- */
 
 public class Service extends android.app.Service
         implements Handler.Callback, PJSIPAppObserver {

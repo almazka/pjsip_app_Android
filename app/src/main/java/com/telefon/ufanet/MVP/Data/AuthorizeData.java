@@ -34,7 +34,7 @@ public class AuthorizeData {
         this.password = password;
     }
 
-    public Boolean getChecked() {
+    public Boolean isChecked() {
         return isChecked;
     }
 
@@ -73,5 +73,6 @@ public class AuthorizeData {
     public String getApi_token(){
         return api_token;
     }
+
 
 }

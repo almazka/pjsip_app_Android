@@ -45,7 +45,7 @@ public class AuthorizePresenter implements IAuthPresenter {
             view.showToast( "Логин или пароль не могут быть пустыми");
             return;
         }
-        if (userData.getChecked()) {
+        if (userData.isChecked()) {
             model.SaveData(userData.getName(), userData.getPassword());
         }
         else {

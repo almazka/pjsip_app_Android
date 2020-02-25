@@ -1,5 +1,6 @@
 package com.telefon.ufanet.MVP.View;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
@@ -26,9 +27,11 @@ import com.telefon.ufanet.MVP.Presenter.AuthorizePresenter;
 import com.telefon.ufanet.R;
 
 
+
 public class AuthorizeActivity extends AppCompatActivity implements IAuthActivity {
 
     private static String LOG_TAG = "AuthorizeActivity";
+
 
     private EditText editTextUsername;
     private EditText editTextPassword;
@@ -38,6 +41,7 @@ public class AuthorizeActivity extends AppCompatActivity implements IAuthActivit
     Button buttonLogin;
 
     RelativeLayout relative_logo, relative_info, relative_main;
+
 
     private AuthorizePresenter presenter;
 
@@ -49,6 +53,7 @@ public class AuthorizeActivity extends AppCompatActivity implements IAuthActivit
         init();
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void init() {
         androidx.appcompat.app.ActionBar bar = getSupportActionBar();
@@ -103,6 +108,7 @@ public class AuthorizeActivity extends AppCompatActivity implements IAuthActivit
         });
 
     }
+
 
     @Override
     public AuthorizeData getUserData() {
