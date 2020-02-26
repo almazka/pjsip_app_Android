@@ -2,7 +2,6 @@ package com.telefon.ufanet;
 
 import android.annotation.SuppressLint;
 
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +13,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.provider.ContactsContract;
+
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
@@ -27,7 +26,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.telefon.ufanet.MVP.Data.AuthorizeData;
+import com.example.ufanet.myapplication.R;
 
 import org.pjsip.pjsua2.Endpoint;
 
@@ -41,16 +40,16 @@ public class MainApp extends AppCompatActivity {
     // Variables and View Elements
     int for_anim = 0;
     int selected_id = 0;
+    Intent intent;
     public static String token, name, sip_log, sip_pass;
     public static String[] global_date1;
     public static String[] global_date2;
     public static String vatsChecked, connectionChecked;
     public static AsyncTask task;
-    public static String status_task;
     BottomNavigationView bottomnav;
     TextView action_bar_title;
     public static ArrayList<ItemCalls> callList;
-    ContentValues cv;
+    ContentValues cv, cv1;
     DBHelper dbhelper;
     public static SQLiteDatabase database;
     public static ArrayList<ItemContacts> contacts;
@@ -61,7 +60,6 @@ public class MainApp extends AppCompatActivity {
     int day, month, year;
 
 
-    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,15 +68,14 @@ public class MainApp extends AppCompatActivity {
         // Global Variables
         for_anim = 3;
         selected_id = 3;
-        AuthorizeData userData = AuthorizeData.getInstance();
-        token = userData.getUser_token();
-        name = userData.getName();
-        sip_log = userData.getSip_user();
-        sip_pass = userData.getSip_password();
+        intent = getIntent();
+        token = intent.getStringExtra("token");
+        name = intent.getStringExtra("name");
+        sip_log = intent.getStringExtra("sip_login");
+        sip_pass = intent.getStringExtra("sip_pass");
         contacts = new ArrayList<>();
         global_date1 =  new String[1];
         global_date2 = new String[1];
-
 
         // ActionBar Settings
         ActionBar bar = getSupportActionBar();
@@ -91,6 +88,7 @@ public class MainApp extends AppCompatActivity {
 
         // BottomNavigation Settings
         bottomnav = findViewById(R.id.bottom_navigation_menu);
+        BottomNavigationViewHelper.disableShiftMode(bottomnav);
         bottomnav.setOnNavigationItemSelectedListener(navListenner);
         bottomnav.getMenu().getItem(2).setChecked(true);
 
@@ -121,28 +119,6 @@ public class MainApp extends AppCompatActivity {
             global_date2[0] = year + "-" + month + "-" + day + " 23:59:59";
         }
 
-        ///////// Модуль подгрузки контактов
-        task = new AsyncTask<Void, Integer, ArrayList<ItemContacts>>() {
-            @Override
-            protected ArrayList<ItemContacts> doInBackground(Void... voids) {
-                publishProgress();
-                status_task = "Running";
-                contacts = getContactNames();
-                return contacts;
-
-            }
-            @Override
-            protected void onProgressUpdate(Integer... values) {
-                super.onProgressUpdate(values);
-            }
-
-            @Override
-            protected void onPostExecute(ArrayList<ItemContacts> s) {
-                status_task = "Finished";
-            }
-        }.execute();
-
-
 
         ////// Работа с базой данных SQLite
         dbhelper = new DBHelper(this);
@@ -166,41 +142,11 @@ public class MainApp extends AppCompatActivity {
        GetRecentCalls();
     }
 
-    ///////// Процедура подгрузки контактов
-    private ArrayList<ItemContacts> getContactNames() {
-        ContentResolver cr = getContentResolver();
-        Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.Contacts.DISPLAY_NAME + " ASC");
-        if (cursor.moveToFirst()) {
-            do {
-                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                int hasPhone = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)));
-                if (hasPhone > 0) {
-                    Cursor cursorNumber = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "= ?",
-                            new String[]{id}, null);
-                    if (cursorNumber != null && cursorNumber.getCount() > 0) {
-                        cursorNumber.moveToFirst();
-                        String phone = cursorNumber.getString(cursorNumber.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        contacts.add(new ItemContacts(name, phone));
-                        array_names.add(name);
-                        array_phones.add(phone);
-                        cursorNumber.close();
-                    }
-                }
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return contacts;
-    }
-
     @Override
     public boolean onSupportNavigateUp(){
         finish();
         return true;
     }
-
 
 
     private void loadText() {
@@ -268,7 +214,7 @@ public class MainApp extends AppCompatActivity {
 
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
-                        case R.id.navigation_recent:
+                        case R.id.nav_recent:
                             action_bar_title.setText("Недавние вызовы");
                             selected_id = 1;
                             selectedFragment = new RecentFragment();
@@ -280,7 +226,7 @@ public class MainApp extends AppCompatActivity {
                             break;
 
 
-                        case R.id.navigation_contacts:
+                        case R.id.nav_contacts:
                             action_bar_title.setText("Контакты");
                             selected_id = 2;
                             selectedFragment = new ContactFragment();
@@ -294,7 +240,7 @@ public class MainApp extends AppCompatActivity {
                             break;
 
 
-                        case R.id.navigation_softphone:
+                        case R.id.nav_softphone:
                             action_bar_title.setText("Набор номера");
                             selected_id = 3;
                             selectedFragment = new SoftPhoneFragment();
@@ -308,7 +254,7 @@ public class MainApp extends AppCompatActivity {
                             break;
 
 
-                        case R.id.navigation_statistic:
+                        case R.id.nav_statistic:
                             action_bar_title.setText("Статистика");
                             selected_id = 4;
                             selectedFragment = new StatisticFragment();
@@ -322,7 +268,7 @@ public class MainApp extends AppCompatActivity {
                             break;
 
 
-                        case R.id.navigation_user:
+                        case R.id.nav_user:
                             action_bar_title.setText("Профиль");
                             selected_id = 5;
                             selectedFragment = new ProfileFragment();

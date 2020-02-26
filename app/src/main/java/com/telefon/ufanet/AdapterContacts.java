@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.ufanet.myapplication.R;
+
 import java.util.ArrayList;
 
 public class AdapterContacts extends BaseAdapter {

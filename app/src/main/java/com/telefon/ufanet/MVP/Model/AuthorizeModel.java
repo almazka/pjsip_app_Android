@@ -44,10 +44,10 @@ public class AuthorizeModel extends MvpAppCompatActivity implements IAuthModel {
                 .subscribe(sip -> {
                     userData.setSip_user(sip.getSipLogin());
                     userData.setSip_password(sip.getSipPass());
-                    callback.onComplete("Success", "");
+                    callback.onComplete("Success");
                     },
                         throwable -> {
-                        callback.onComplete("Error", "Неверный логин или пароль");
+                        callback.onError( "Неверный логин или пароль");
                     }
                 );
     }
@@ -75,6 +75,7 @@ public class AuthorizeModel extends MvpAppCompatActivity implements IAuthModel {
 
 
     public interface CompleteCallback {
-        void onComplete(String type, String msg);
+        void onComplete(String msg);
+        void onError(String msg);
     }
 }

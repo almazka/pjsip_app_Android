@@ -4,20 +4,20 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import com.telefon.ufanet.MVP.VOIP.Service;
+
+import com.telefon.ufanet.MVP.VOIP.MyService;
 import com.telefon.ufanet.MVP.Data.AuthorizeData;
 import com.telefon.ufanet.MVP.Interfaces.IAuthPresenter;
 import com.telefon.ufanet.MVP.Model.AuthorizeModel;
 import com.telefon.ufanet.MVP.View.AuthorizeActivity;
 import com.telefon.ufanet.MVP.Interfaces.IAuthActivity;
 import com.telefon.ufanet.MVP.View.MainAppActivity;
+import com.telefon.ufanet.MainApp;
 
 
 public class AuthorizePresenter implements IAuthPresenter {
@@ -40,7 +40,7 @@ public class AuthorizePresenter implements IAuthPresenter {
     public void Login() {
         final AuthorizeData userData = view.getUserData();
         if (TextUtils.isEmpty(userData.getName()) || TextUtils.isEmpty(userData.getPassword())) {
-            view.showToast( "Логин или пароль не могут быть пустыми");
+            view.showInfoToast( "Логин или пароль не могут быть пустыми");
             return;
         }
         if (userData.isChecked()) {
@@ -51,25 +51,23 @@ public class AuthorizePresenter implements IAuthPresenter {
         }
         view.showProgress();
         model.Authorize(userData.getName(), userData.getPassword(), new AuthorizeModel.CompleteCallback() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void onComplete(String type, String msg) {
+            public void onComplete(String msg) {
                 view.hideProgress();
-                if (type == "Success") {
-                    Intent serviceIntent = new Intent(activity.getApplicationContext(), Service.class);
-                    serviceIntent.putExtra("sip_login", userData.getSip_user());
-                    serviceIntent.putExtra("sip_pass", userData.getSip_password());
-                    serviceIntent.putExtra("token", userData.getUser_token());
-                    serviceIntent.putExtra("name", userData.getName());
-                    activity.startService(serviceIntent);
+                Intent serviceIntent = new Intent(activity.getApplicationContext(), MyService.class);
+                serviceIntent.putExtra("sip_login", userData.getSip_user());
+                serviceIntent.putExtra("sip_pass", userData.getSip_password());
+                serviceIntent.putExtra("token", userData.getUser_token());
+                serviceIntent.putExtra("name", userData.getName());
+                activity.startService(serviceIntent);
+                Intent intent = new Intent(activity.getApplicationContext(), MainAppActivity.class);
+                activity.startActivity(intent);
+            }
 
-
-                    Intent intent = new Intent(activity.getApplicationContext(), MainAppActivity.class);
-                    activity.startActivity(intent);
-                }
-                else {
-                    view.showToast(msg);
-                }
+            @Override
+            public void onError(String msg) {
+                view.hideProgress();
+                view.showErrorToast(msg);
             }
         });
     }
@@ -85,7 +83,7 @@ public class AuthorizePresenter implements IAuthPresenter {
         view.setUserData(model.LoadData());
         Boolean connection = model.isOnline(activity);
         if (!connection) {
-            view.showToast( "Отсутствует соединение с интернетом");
+            view.showInfoToast( "Отсутствует соединение с интернетом");
         }
         final int permissionStatus = ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.READ_CONTACTS);
         final int permissionStatus2 = ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.RECORD_AUDIO);

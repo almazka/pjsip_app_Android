@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">TelefonUfanet</string>
+    <string name="action_settings">Настройки</string>
+    <string name="title_activity_call">Call</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="show_preview">ShowPreview</string>
+    <string name="hide_preview">Hide Preview</string>
+    <string name="title_activity_main2"></string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 
     <string-array name="catlist">
@@ -7,6 +16,7 @@
         <item>Абонент занят</item>
         <item>Нет ответа</item>
     </string-array>
+    <string name="title_activity_test">TEST</string>
 
     <string-array name="status_list">
         <item>Все</item>
@@ -26,4 +36,8 @@
     </string-array>
 
 
+    <string-array name="stepLabels">
+        <item>Период детализации</item>
+        <item>Параметры</item>
+    </string-array>
 </resources>

@@ -33,6 +33,7 @@ import com.echo.holographlibrary.BarGraph;
 import com.echo.holographlibrary.HoloGraphAnimate;
 import com.echo.holographlibrary.PieGraph;
 import com.echo.holographlibrary.PieSlice;
+import com.example.ufanet.myapplication.R;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
@@ -73,7 +74,7 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_statistic, null);
+        return inflater.inflate(R.layout.statistic_fragment, null);
     }
 
     @SuppressLint("SetTextI18n")
@@ -88,7 +89,7 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
         dialog2.setContentView(R.layout.date_dialog_layout);
 
 
-        datePicker = dialog.findViewById(R.id.datePicker) ;
+        datePicker = dialog.findViewById(R.id.dp) ;
         pg = view.findViewById(R.id.piegraph);
         pg1 = view.findViewById(R.id.piegraph2);
         barGraph = view.findViewById(R.id.bargraph);
@@ -98,7 +99,7 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
         first = view.findViewById(R.id.firstdate_statistic);
         second = view.findViewById(R.id.seconddate_statistic);
         button_ok = dialog.findViewById(R.id.button_ok);
-        datePicker2  = dialog2.findViewById(R.id.datePicker) ;
+        datePicker2  = dialog2.findViewById(R.id.dp) ;
         button_ok2 = dialog2.findViewById(R.id.button_ok);
         textinfo1 = view.findViewById(R.id.text_info1);
         textinfo2 = view.findViewById(R.id.text_info2);
@@ -424,7 +425,7 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
 
 
     private String getStatistics(String json, String token, String date1, String date2 ) {
-        HttpPost post = new HttpPost("https://telefon.ufanet.ru/api/Statistics?date1="+date1+"&date2="+date2);
+        HttpPost post = new HttpPost("https://telefon.ufanet.ru/api/Statistics?date1="+date1+"%2000:00:00&date2="+date2+"%2023:59:59");
         try {
             StringEntity entity = new StringEntity(json, "utf-8");
             entity.setContentEncoding("UTF-8");
@@ -451,13 +452,16 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
 
     private String getNumberResponse(String json, String token) {
 
+
         HttpGet post = new HttpGet("https://telefon.ufanet.ru/api/Statistics/GetNumbers");
         try {
             post.setHeader("Content-Type", "application/json");
             post.setHeader("Authorization", token);
 
+
             DefaultHttpClient client = new DefaultHttpClient();
             BasicResponseHandler handler = new BasicResponseHandler();
+
 
             String response = client.execute(post, handler);
 

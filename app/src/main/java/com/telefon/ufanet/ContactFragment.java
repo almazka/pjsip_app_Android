@@ -1,6 +1,7 @@
 package com.telefon.ufanet;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +10,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-
+import android.provider.ContactsContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -26,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -34,10 +34,10 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.telefon.ufanet.MVP.VOIP.PJSIPAccount;
-import com.telefon.ufanet.MVP.VOIP.PJSIPCall;
-import com.telefon.ufanet.MVP.VOIP.Service;
-
+import com.telefon.ufanet.MVP.VOIP.MyAccount;
+import com.telefon.ufanet.MVP.VOIP.MyCall;
+import com.telefon.ufanet.MVP.VOIP.MyService;
+import com.example.ufanet.myapplication.R;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
@@ -57,9 +57,8 @@ public class ContactFragment extends Fragment {
 
     Button button_star, button_private, button_worked;
     EditText et_search;
-    SwipeMenuListView lv_star, lv_workers;
-    ListView lv_сontact;
-    LinearLayout linear_contacts, linear_star, linear_workers, linear_not_found, linear_not_found_contact, linear_search, linear_load_contact;
+    SwipeMenuListView lv_star, lv_сontact, lv_workers;
+    LinearLayout linear_contacts, linear_star, linear_workers, linear_not_found, linear_not_found_contact, linear_search;
     ProgressBar progress_load_contacts, progress_load_workers;
     ArrayList<ItemContactsWorkers> contactListWorker;
     ArrayList<ItemContacts> contactList, contactList_star;
@@ -69,7 +68,7 @@ public class ContactFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_contact, container, false);
+        return inflater.inflate(R.layout.fragmen_contact, container, false);
     }
 
     @SuppressLint({"StaticFieldLeak", "ResourceAsColor", "WrongViewCast", "CutPasteId"})
@@ -87,7 +86,6 @@ public class ContactFragment extends Fragment {
         linear_workers = view.findViewById(R.id.linear_workers);
         lv_star = view.findViewById(R.id.list_star);
         lv_сontact = view.findViewById(R.id.list_contact);
-        linear_load_contact = view.findViewById(R.id.linear_load_contact);
         progress_load_contacts = view.findViewById(R.id.progress_load_contacts);
         linear_search = view.findViewById(R.id.layout_search);
         lv_workers = view.findViewById(R.id.list_workers);
@@ -106,7 +104,7 @@ public class ContactFragment extends Fragment {
 
         button_star.setBackgroundColor(getResources().getColor(R.color.background));
         button_worked.setBackgroundColor(getResources().getColor(R.color.background));
-        button_private.setBackgroundResource(R.drawable.shadow_bottom);
+        button_private.setBackgroundResource(R.drawable.background_shadow_bottom);
         button_private.setTextColor(R.color.purple);
         button_worked.setTextColor(R.color.BLACK);
         button_star.setTextColor(R.color.BLACK);
@@ -130,24 +128,41 @@ public class ContactFragment extends Fragment {
         };
         lv_star.setMenuCreator(creator);
 
-        if (MainApp.status_task != "Finished") {
-            linear_load_contact.setVisibility(View.VISIBLE);
-        }
-        else {
-            if (MainApp.contacts.size() == 0) {
-                Toast.makeText(getContext(),"Список контактов пуст", Toast.LENGTH_LONG).show();
-                progress_load_contacts.setVisibility(View.GONE);
+
+        ///////// Модуль подгрузки контактов
+        task = new AsyncTask<Void, Integer, ArrayList<ItemContacts>>() {
+            @Override
+            protected ArrayList<ItemContacts> doInBackground(Void... voids) {
+                publishProgress();
+                contactList = getContactNames();
+                return contactList;
+
             }
-            else {
-                contactList = MainApp.contacts;
+
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+                super.onProgressUpdate(values);
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<ItemContacts> s) {
                 progress_load_contacts.setVisibility(View.GONE);
                 linear_search.setVisibility(View.VISIBLE);
                 lv_сontact.setAdapter(new AdapterContacts(getContext(), contactList));
-                lv_сontact.setVisibility(View.VISIBLE);
                 registerForContextMenu(lv_сontact);
             }
-        }
+        };
 
+        if (MainApp.contacts.size() == 0) {
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        else {
+            contactList = MainApp.contacts;
+            progress_load_contacts.setVisibility(View.GONE);
+            linear_search.setVisibility(View.VISIBLE);
+            lv_сontact.setAdapter(new AdapterContacts(getContext(), contactList));
+            registerForContextMenu(lv_сontact);
+        }
 
 
         ////// Процедура поиска контактов
@@ -221,6 +236,11 @@ public class ContactFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (task.getStatus() == AsyncTask.Status.FINISHED ) {
+        }
+        else {
+            task.cancel(true);
+        }
     }
 
     ///////// Процедура нажатия на элемент списка личных контактов
@@ -237,15 +257,15 @@ public class ContactFragment extends Fragment {
                     contact_number = contact_number.replace("+7", "8");
                     contact_number = contact_number.replaceAll("[^0-9]", "");
                     String call_contact_name = contactList.get(position).getHeader().toString();
-                    if (Service.msg_str.length() == 0) {
+                    if (MyService.msg_str.length() == 0) {
                         Toast.makeText(getContext(), "Необходима SIP регистрация", Toast.LENGTH_LONG).show();
-                    } else if (Service.msg_str.length() == 23) {
+                    } else if (MyService.msg_str.length() == 23) {
 
                         if (contact_number.length() == 0) {
                             Toast.makeText(getContext(), "Введите номер телефона", Toast.LENGTH_LONG).show();
                         } else {
-                            PJSIPAccount account = Service.account;
-                            PJSIPCall call = new PJSIPCall(account, -1);
+                            MyAccount account = MyService.account;
+                            MyCall call = new MyCall(account, -1);
                             CallOpParam prm = new CallOpParam(false);
                             try {
                                 switch (MainApp.vatsChecked.length()) {
@@ -259,11 +279,11 @@ public class ContactFragment extends Fragment {
                                 call.delete();
                                 return;
                             }
-                            Service.currentCall = call;
+                            MyService.currentCall = call;
                             showCallActivity();
                         }
                     } else {
-                        Toast.makeText(getContext(), Service.msg_str, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), MyService.msg_str, Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -271,6 +291,34 @@ public class ContactFragment extends Fragment {
         }
     };
 
+    ///////// Процедура подгрузки контактов
+    private ArrayList<ItemContacts> getContactNames() {
+        ContentResolver cr = getActivity().getContentResolver();
+        Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.Contacts.DISPLAY_NAME + " ASC");
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                int hasPhone = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)));
+                if (hasPhone > 0) {
+                    Cursor cursorNumber = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "= ?",
+                            new String[]{id}, null);
+                    if (cursorNumber != null && cursorNumber.getCount() > 0) {
+                        cursorNumber.moveToFirst();
+                        String phone = cursorNumber.getString(cursorNumber.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        MainApp.contacts.add(new ItemContacts(name, phone));
+                        MainApp.array_names.add(name);
+                        MainApp.array_phones.add(phone);
+                        cursorNumber.close();
+                    }
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return MainApp.contacts;
+    }
 
     /////  Процедура отображения личных контактов
     private View.OnClickListener button_private_listenner = new View.OnClickListener() {
@@ -282,7 +330,7 @@ public class ContactFragment extends Fragment {
             linear_not_found.setVisibility(View.GONE);
             button_star.setBackgroundColor(getResources().getColor(R.color.background));
             button_worked.setBackgroundColor(getResources().getColor(R.color.background));
-            button_private.setBackgroundResource(R.drawable.shadow_bottom);
+            button_private.setBackgroundResource(R.drawable.background_shadow_bottom);
             button_private.setTextColor(R.color.purple);
             button_worked.setTextColor(R.color.BLACK);
             button_star.setTextColor(R.color.BLACK);
@@ -306,15 +354,15 @@ public class ContactFragment extends Fragment {
                     contact_number_worker = contact_number_worker.replaceAll("[^0-9]", "");
                     String call_contact_name = contactListWorker.get(position).getHeader().toString();
 
-                    if (Service.msg_str.length() == 0) {
+                    if (MyService.msg_str.length() == 0) {
                         Toast.makeText(getContext(), "Необходима SIP регистрация", Toast.LENGTH_LONG).show();
-                    } else if (Service.msg_str.length() == 23) {
+                    } else if (MyService.msg_str.length() == 23) {
 
                         if (contact_number_worker.length() == 0) {
                             Toast.makeText(getContext(), "Введите номер телефона", Toast.LENGTH_LONG).show();
                         } else {
-                            PJSIPAccount account = Service.account;
-                            PJSIPCall call = new PJSIPCall(account, -1);
+                            MyAccount account = MyService.account;
+                            MyCall call = new MyCall(account, -1);
                             CallOpParam prm = new CallOpParam(false);
                             try {
                                 call.makeCall("sip:" + contact_number_worker.toString() + "@92.50.152.146:5401", prm);
@@ -322,12 +370,12 @@ public class ContactFragment extends Fragment {
                                 call.delete();
                                 return;
                             }
-                            Service.currentCall = call;
+                            MyService.currentCall = call;
                             showCallActivity();
                         }
 
                     } else {
-                        Toast.makeText(getContext(), Service.msg_str, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), MyService.msg_str, Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -378,7 +426,7 @@ public class ContactFragment extends Fragment {
         public void onClick(View view) {
             button_private.setBackgroundColor(getResources().getColor(R.color.background));
             button_worked.setBackgroundColor(getResources().getColor(R.color.background));
-            button_star.setBackgroundResource(R.drawable.shadow_bottom);
+            button_star.setBackgroundResource(R.drawable.background_shadow_bottom);
             button_star.setTextColor(R.color.purple);
             button_private.setTextColor(R.color.BLACK);
             button_worked.setTextColor(R.color.BLACK);
@@ -429,14 +477,14 @@ public class ContactFragment extends Fragment {
                     contact_number_star = contact_number_star.replaceAll("[^0-9]", "");
                     String call_contact_name = contactList_star.get(position).getHeader().toString();
 
-                    if (Service.msg_str.length() == 0) {
+                    if (MyService.msg_str.length() == 0) {
                         Toast.makeText(getContext(), "Необходима SIP регистрация", Toast.LENGTH_LONG).show();
-                    } else if (Service.msg_str.length() == 23) {
+                    } else if (MyService.msg_str.length() == 23) {
                         if (contact_number_star.length() == 0) {
                             Toast.makeText(getContext(), "Введите номер телефона", Toast.LENGTH_LONG).show();
                         } else {
-                            PJSIPAccount account = Service.account;
-                            PJSIPCall call = new PJSIPCall(account, -1);
+                            MyAccount account = MyService.account;
+                            MyCall call = new MyCall(account, -1);
                             CallOpParam prm = new CallOpParam(false);
                             try {
                                 call.makeCall("sip:" + contact_number_star.toString() + "@92.50.152.146:5401", prm);
@@ -444,12 +492,12 @@ public class ContactFragment extends Fragment {
                                 call.delete();
                                 return;
                             }
-                            Service.currentCall = call;
+                            MyService.currentCall = call;
                             showCallActivity();
                         }
 
                     } else {
-                        Toast.makeText(getContext(), Service.msg_str, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), MyService.msg_str, Toast.LENGTH_LONG).show();
                     }
                 }
             }, 5);
@@ -465,7 +513,7 @@ public class ContactFragment extends Fragment {
         public void onClick(View view) {
             button_private.setBackgroundColor(getResources().getColor(R.color.background));
             button_star.setBackgroundColor(getResources().getColor(R.color.background));
-            button_worked.setBackgroundResource(R.drawable.shadow_bottom);
+            button_worked.setBackgroundResource(R.drawable.background_shadow_bottom);
             button_star.setTextColor(R.color.BLACK);
             button_private.setTextColor(R.color.BLACK);
             button_worked.setTextColor(R.color.purple);
@@ -473,7 +521,7 @@ public class ContactFragment extends Fragment {
             linear_star.setVisibility(View.GONE);
             linear_contacts.setVisibility(View.GONE);
             linear_workers.setVisibility(View.VISIBLE);
-            Service.GetContacts();
+            MyService.GetContacts();
             progress_load_workers.setVisibility(View.VISIBLE);
 
 

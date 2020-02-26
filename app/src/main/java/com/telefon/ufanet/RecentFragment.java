@@ -10,7 +10,6 @@ import android.provider.CallLog;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.telefon.ufanet.MVP.VOIP.PJSIPCall;
-import com.telefon.ufanet.MVP.VOIP.Service;
+import com.telefon.ufanet.MVP.VOIP.MyCall;
+import com.telefon.ufanet.MVP.VOIP.MyService;
+import com.example.ufanet.myapplication.R;
 
 import org.pjsip.pjsua2.CallOpParam;
 import java.text.Format;
@@ -38,7 +38,7 @@ public class RecentFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_recent, container, false);
+        return inflater.inflate(R.layout.fragmen_recent, container, false);
     }
 
 
@@ -134,15 +134,15 @@ public class RecentFragment extends Fragment {
             call_number = call_number.replace("+7", "8");
             call_number = call_number.replaceAll("[^0-9]", "");
 
-            if (Service.msg_str.length() == 0) {
+            if (MyService.msg_str.length() == 0) {
                 Toast.makeText(getContext(), "Необходима SIP регистрация", Toast.LENGTH_LONG).show();
-            } else if (Service.msg_str.length() == 23) {
+            } else if (MyService.msg_str.length() == 23) {
 
                 if (call_number.length() == 0) {
                     Toast.makeText(getContext(), "Введите номер телефона", Toast.LENGTH_LONG).show();
                 } else {
-                    SoftPhoneFragment.account = Service.account;
-                    PJSIPCall call = new PJSIPCall(SoftPhoneFragment.account, -1);
+                    SoftPhoneFragment.account = MyService.account;
+                    MyCall call = new MyCall(SoftPhoneFragment.account, -1);
                     CallOpParam prm = new CallOpParam(false);
                     try {
                         switch (MainApp.vatsChecked.length()) {
@@ -155,12 +155,12 @@ public class RecentFragment extends Fragment {
                         call.delete();
                         return;
                     }
-                    Service.currentCall = call;
+                    MyService.currentCall = call;
                     showCallActivity();
                 }
 
             } else {
-                Toast.makeText(getContext(), Service.msg_str, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), MyService.msg_str, Toast.LENGTH_LONG).show();
             }
 
         }

@@ -7,15 +7,14 @@ import android.util.Log;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.telefon.ufanet.ItemContacts;
+import com.example.ufanet.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.telefon.ufanet.MVP.Data.AuthorizeData;
 import com.telefon.ufanet.MVP.Interfaces.IMainAppActivity;
-import com.telefon.ufanet.R;
 import com.telefon.ufanet.SoftPhoneFragment;
 
-
-import org.pjsip.pjsua2.Endpoint;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -95,41 +94,6 @@ public class MainAppActivity extends AppCompatActivity implements IMainAppActivi
             date_to[0] = year + "-" + month + "-" + day + " 23:59:59";
         }
 
-
-        try {
-            Endpoint.instance().codecSetPriority("PCMA/8000", (short) 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Endpoint.instance().codecSetPriority("speex/16000", (short) 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            Endpoint.instance().codecSetPriority("speex/8000", (short) 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Endpoint.instance().codecSetPriority("speex/32000", (short) 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Endpoint.instance().codecSetPriority("GSM/8000", (short) 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Endpoint.instance().codecSetPriority("PCMU/8000", (short) 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 }

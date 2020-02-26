@@ -1,0 +1,548 @@
+<?xl version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/bkgrd">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/back_top_image"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/gradient_bg"
+                        android:layout_height="0dp" />
+
+                    <ImageView
+                        android:id="@+id/back_bottom_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="#00FFFFFF"/>
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/netStatusRoot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="35dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_fav_test"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:orientation="horizontal"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp">
+
+                        <LinearLayout
+                            android:paddingTop="2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingBottom="10dp">
+
+                                <LinearLayout
+                                    android:id="@+id/lin1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="15dp"
+                                    android:orientation="vertical">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="sans-serif"
+                                            android:text="Начиная c:  "
+                                            android:layout_marginTop="5dp"
+                                            android:textAllCaps="false"
+                                            android:textColor="@color/BLACK"
+                                            android:textSize="15sp" />
+
+                                        <TextView
+                                            android:id="@+id/firstdate_statistic"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="27dp"
+                                            android:layout_marginTop="5dp"
+                                            android:background="@drawable/et_bg_black"
+                                            android:fontFamily="sans-serif"
+                                            android:textAlignment="center"
+                                            android:textColor="#000"
+                                            android:textSize="15sp" />
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="15dp"
+                                        android:orientation="horizontal">
+
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="sans-serif"
+                                            android:text="По:   "
+                                            android:textAllCaps="false"
+                                            android:layout_marginTop="5dp"
+                                            android:textColor="@color/BLACK"
+                                            android:textSize="15sp" />
+
+                                        <TextView
+                                            android:textAlignment="center"
+                                            android:id="@+id/seconddate_statistic"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="27dp"
+                                            android:layout_marginTop="5dp"
+                                            android:background="@drawable/et_bg_black"
+                                            android:textColor="#000000"
+                                            android:textSize="15sp" />
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/interval"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/lin1"
+                                    android:layout_marginTop="5dp"
+                                    android:gravity="center"
+                                    android:text="(интервал не более 60 дней)"
+                                    android:textColor="@color/BLACK"
+                                    android:textSize="15sp"/>
+
+                                <Button
+                                    android:id="@+id/prim"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="35dp"
+                                    android:layout_below="@id/interval"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="15dp"
+                                    android:background="@drawable/button_background"
+                                    android:fontFamily="sans-serif"
+                                    android:text="Показать"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/White"
+                                    android:textSize="14sp" />
+
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+            </FrameLayout>
+
+
+            <ProgressBar
+                android:paddingTop="10dp"
+                android:visibility="gone"
+                android:id="@+id/progress_statistic"
+                android:minHeight="20dip"
+                android:maxHeight="20dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.ProgressBar.Inverse"/>
+
+
+            <LinearLayout
+                android:id="@+id/main_layout"
+                android:visibility="gone"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginStart="22dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/fav_test_img"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="8dp"
+                            android:src="@drawable/time" />
+
+                        <TextView
+                            android:gravity="center"
+                            android:id="@+id/textView9"
+                            android:layout_width="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="Среднее время дозвона:"
+                            android:textColor="@color/BLACK"
+                            />
+
+                        <TextView
+                            android:id="@+id/time_average"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="2dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textStyle="bold|italic"
+                            android:textColor="@color/BLACK"
+                            android:textSize="14sp"
+                             />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginStart="22dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_percent"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="8dp"
+                            android:src="@drawable/percent" />
+
+                        <TextView
+                            android:gravity="center"
+                            android:id="@+id/tv_percent"
+                            android:layout_width="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="Процент дозвона:"
+                            android:textColor="@color/BLACK"
+                            />
+
+                        <TextView
+                            android:id="@+id/text_percent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="2dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textStyle="bold|italic"
+                            android:textColor="@color/BLACK"
+                            android:textSize="14sp"
+                            />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginStart="22dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_gravity="center_horizontal"
+                            android:paddingTop="5dp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:text="Исходящие звонки (Успешные/неуспешные)"/>
+
+                        <com.echo.holographlibrary.PieGraph
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:id="@+id/piegraph"
+                            app:pieInnerCircleRatio="128"
+                            app:pieSlicePadding="0dip"/>
+
+                        <TextView
+                            android:layout_marginLeft="15dp"
+                            android:id="@+id/text_info3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text=""
+                            android:textSize="13sp"/>
+
+                        <LinearLayout
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_marginTop="5dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@color/green_light"/>
+
+                            <TextView
+                                android:id="@+id/text_info1"
+                                android:paddingLeft="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textSize="13sp"
+                                android:text= ""/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:paddingTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_marginTop="4dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@color/orange"/>
+                            <TextView
+                                android:textAlignment="center"
+                                android:id="@+id/text_info2"
+                                android:layout_marginLeft="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text=""
+                                android:textSize="13sp"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginStart="22dp"
+                    android:visibility="visible"
+                    android:layout_marginTop="15dp"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_gravity="center_horizontal"
+                            android:paddingTop="5dp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cредняя длительность звонков (cек)"
+                            android:textSize="13sp"/>
+
+
+                        <com.echo.holographlibrary.BarGraph
+                            android:layout_width="wrap_content"
+                            android:layout_height="150dp"
+                            android:id="@+id/bargraph"
+                            android:layout_marginTop = "10dp"
+                            android:layout_marginRight = "20dp"
+                            android:layout_marginLeft = "20dp"
+                            android:layout_marginBottom = "10dp"
+                            app:barAxisColor="@color/orange"
+                            app:barShowText="true"
+                            app:barShowAxis="true" />
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginStart="22dp"
+                    android:visibility="visible"
+                    android:layout_marginTop="15dp"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_gravity="center_horizontal"
+                            android:paddingTop="5dp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Входящие звонки (Успешные/неуспешные)"
+                            android:textSize="13sp"/>
+
+                        <com.echo.holographlibrary.PieGraph
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:id="@+id/piegraph2"
+                            app:pieInnerCircleRatio="128"
+                            app:pieSlicePadding="0dip"/>
+
+                        <TextView
+                            android:layout_marginLeft="15dp"
+                            android:id="@+id/text_info4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="" />
+
+                        <LinearLayout
+
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_marginTop="5dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@color/green_light"/>
+
+                            <TextView
+                                android:layout_marginLeft="5dp"
+                                android:id="@+id/text_info5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginLeft="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_marginTop="5dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:background="@color/orange"/>
+                            <TextView
+                                android:layout_marginLeft="5dp"
+                                android:textAlignment="center"
+                                android:id="@+id/text_info6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text=""
+                                android:layout_marginBottom="10dp"/>
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>

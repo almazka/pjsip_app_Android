@@ -16,16 +16,17 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ufanet.myapplication.R;
 import com.telefon.ufanet.MVP.Data.AuthorizeData;
 import com.telefon.ufanet.MVP.Data.PrefManager;
 import com.telefon.ufanet.MVP.Interfaces.IAuthActivity;
 import com.telefon.ufanet.MVP.Model.AuthorizeModel;
 import com.telefon.ufanet.MVP.Presenter.AuthorizePresenter;
-import com.telefon.ufanet.R;
 
+import es.dmoral.toasty.Toasty;
 
 
 public class AuthorizeActivity extends AppCompatActivity implements IAuthActivity {
@@ -138,8 +139,17 @@ public class AuthorizeActivity extends AppCompatActivity implements IAuthActivit
     }
 
     @Override
-    public void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    public void showSuccessToast(String msg) {
+        Toasty.success(this,msg, Toasty.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showErrorToast(String msg) {
+        Toasty.error(this,msg, Toasty.LENGTH_SHORT).show();
+    }
+    @Override
+    public void showInfoToast(String msg) {
+        Toasty.info(this,msg, Toasty.LENGTH_SHORT).show();
     }
 
     @Override

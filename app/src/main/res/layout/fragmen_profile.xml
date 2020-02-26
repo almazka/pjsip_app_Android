@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/bkgrd">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/top_image"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/gradient_bg"
+                        android:layout_height="0dp" />
+
+                    <ImageView
+                        android:id="@+id/bottom_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="#00ffffff"/>
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:orientation="horizontal"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="10dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/img_male"
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/male"/>
+
+                            <TextView
+                                android:id="@+id/tv_user"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/gray"
+                                android:text="3805@SoftPhone"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="right|center_vertical">
+
+                                <ImageView
+                                    android:id="@+id/image_exit"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginRight="5dp"
+                                    android:src="@drawable/exit"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/purple"
+                                    android:text="Выход"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="10dp"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Разделы"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/DetailFragment"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="15dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_green"
+                        android:orientation="horizontal"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp">
+                        <LinearLayout
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/detail"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/White"
+                                android:textSize="13sp"
+                                android:fontFamily="sans-serif"
+                                android:text="Детализация звонков"/>
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/MissedCallsFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="15dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_purple"
+                        android:orientation="horizontal"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp">
+                        <LinearLayout
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/missed"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/White"
+                                android:textSize="13sp"
+                                android:fontFamily="sans-serif"
+                                android:text="Пропущенные вызовы"/>
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/RecordsFragment"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="15dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_blue"
+                        android:orientation="horizontal"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/records" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:text="Записи разговоров"
+                                android:textColor="@color/White"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="10dp"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Настройки"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                app:cardCornerRadius="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#fff"
+                    android:orientation="horizontal"
+                    android:paddingLeft="7dp"
+                    android:layout_margin="10dp"
+                    android:paddingRight="7dp"
+                    android:layout_gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="ВАТС"
+                            android:textSize="13sp"
+                            android:fontFamily="sans-serif"/>
+                        <Switch
+                            android:id="@+id/switch_vats"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginStart="22dp"
+                android:visibility="visible"
+                app:cardCornerRadius="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#fff"
+                    android:orientation="horizontal"
+                    android:paddingLeft="7dp"
+                    android:layout_margin="10dp"
+                    android:paddingRight="7dp"
+                    android:layout_gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:textSize="13sp"
+                            android:fontFamily="sans-serif"
+                            android:text="Плохое соединение"/>
+                        <Switch
+                            android:id="@+id/switch_connection"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="10dp"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Переадресация"/>
+
+            <ProgressBar
+                android:paddingTop="10dp"
+                android:visibility="gone"
+                android:id="@+id/progress_redirect"
+                android:minHeight="20dip"
+                android:maxHeight="20dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.ProgressBar.Inverse"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/redirect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:cardCornerRadius="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#fff"
+                    android:orientation="horizontal"
+                    android:paddingLeft="7dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:paddingTop="5dp"
+                                android:paddingLeft="5dp"
+                                android:paddingBottom="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Тип переадресации"
+                                android:textColor="@color/BLACK"
+                                android:textSize="14dp"/>
+
+                            <Spinner
+                                android:id="@+id/spinner_redirect"
+                                android:gravity="right"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:spinnerMode="dropdown"
+                                android:textAlignment="textEnd"
+                                android:entries="@array/list_redirect"
+                                tools:ignore="RtlCompat"></Spinner>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/lin_redirect_all"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/redirect_all_calls"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="На номер: "/>
+
+                                <EditText
+                                    android:id="@+id/et_redirect_all"
+                                    android:layout_gravity="right"
+                                    android:layout_width="150dp"
+                                    android:layout_height="25dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:textSize="14sp"
+                                    android:inputType="number"
+                                    android:textAlignment="center"
+                                    android:background="@drawable/et_bg_black"/>
+                            </LinearLayout>
+
+                            <Button
+                                android:id="@+id/button_redirect_all"
+                                android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/button_background"
+                                android:fontFamily="sans-serif"
+                                android:text="Сохранить"
+                                android:textAllCaps="false"
+                                android:textColor="@color/White"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/lin_redirect_delay"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:id="@+id/redirect_calls_delay"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="На номер: "/>
+
+                                <EditText
+                                    android:id="@+id/et_redirect_delay_number"
+                                    android:layout_gravity="right"
+                                    android:layout_width="150dp"
+                                    android:layout_height="25dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:textSize="14sp"
+                                    android:inputType="number"
+                                    android:textAlignment="center"
+                                    android:background="@drawable/et_bg_black"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/redirect_time_delay"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="Через: "/>
+
+                                <EditText
+                                    android:id="@+id/et_redirect_delay"
+                                    android:layout_gravity="right"
+                                    android:layout_width="40dp"
+                                    android:layout_height="25dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:textSize="14sp"
+                                    android:inputType="number"
+                                    android:textAlignment="center"
+                                    android:background="@drawable/et_bg_black"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="сек"/>
+                            </LinearLayout>
+
+                            <Button
+                                android:id="@+id/button_redirect_delay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/button_background"
+                                android:fontFamily="sans-serif"
+                                android:text="Сохранить"
+                                android:textAllCaps="false"
+                                android:textColor="@color/White"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

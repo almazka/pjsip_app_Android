@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ufanet.myapplication.R;
+
 import java.util.ArrayList;
 
 public class AdapterCalls extends BaseAdapter {

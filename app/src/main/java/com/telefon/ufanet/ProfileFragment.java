@@ -31,8 +31,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.telefon.ufanet.MVP.VOIP.Service;
+import com.telefon.ufanet.MVP.VOIP.MyService;
+import com.example.ufanet.myapplication.R;
 import com.telefon.ufanet.MVP.View.AuthorizeActivity;
 
 import org.apache.http.client.ClientProtocolException;
@@ -56,7 +56,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragmen_profile, container, false);
     }
 
     Spinner spinner;
@@ -209,11 +209,11 @@ public class ProfileFragment extends Fragment {
             PopupMenu popup = new PopupMenu(getContext(), image_male);
             //Inflating the Popup using xml file
             popup.getMenuInflater()
-                    .inflate(R.menu.popup_menu, popup.getMenu());
+                    .inflate(R.menu.popup, popup.getMenu());
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 public boolean onMenuItemClick(MenuItem item) {
-                    Service.DeInit();
-                    getActivity().stopService(new Intent(getContext(), Service.class));
+                    MyService.DeInit();
+                    getActivity().stopService(new Intent(getContext(), MyService.class));
                     getActivity().finishAffinity();
                     Intent i = new Intent(getContext(), AuthorizeActivity.class);
                     i.putExtra("unreg", "true");
@@ -222,7 +222,7 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-            popup.show(); //showing popup_menu
+            popup.show(); //showing popup
         }
     };
 
@@ -317,8 +317,8 @@ public class ProfileFragment extends Fragment {
             return new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Service.DeInit();
-                    getActivity().stopService(new Intent(getContext(), Service.class));
+                    MyService.DeInit();
+                    getActivity().stopService(new Intent(getContext(), MyService.class));
                     Handler handler3 = new Handler();
                     handler3.postDelayed(new Runnable() {
                         @Override

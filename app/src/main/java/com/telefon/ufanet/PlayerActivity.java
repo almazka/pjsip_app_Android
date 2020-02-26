@@ -20,6 +20,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ufanet.myapplication.R;
 
 import java.io.File;
 import java.io.FileOutputStream;

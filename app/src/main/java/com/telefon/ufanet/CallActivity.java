@@ -1,3 +1,21 @@
+/* $Id: CallActivity.java 5138 2015-07-30 06:23:35Z ming $ */
+/*
+ * Copyright (C) 2013 Teluu Inc. (http://www.teluu.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 package com.telefon.ufanet;
 
 import android.annotation.SuppressLint;
@@ -20,13 +38,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.Vibrator;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,12 +56,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.telefon.ufanet.MVP.VOIP.PJSIPApp;
-import com.telefon.ufanet.MVP.VOIP.Service;
+import com.example.ufanet.myapplication.R;
+import com.telefon.ufanet.MVP.VOIP.IncomingCallReceiver;
+import com.telefon.ufanet.MVP.VOIP.MyApp;
+import com.telefon.ufanet.MVP.VOIP.MyService;
 
 import org.pjsip.pjsua2.AccountConfig;
 import org.pjsip.pjsua2.CallInfo;
 import org.pjsip.pjsua2.CallOpParam;
+import org.pjsip.pjsua2.VideoPreviewOpParam;
+import org.pjsip.pjsua2.VideoWindowHandle;
 import org.pjsip.pjsua2.pjmedia_orient;
 import org.pjsip.pjsua2.pjsip_inv_state;
 import org.pjsip.pjsua2.pjsip_role_e;
@@ -52,13 +75,68 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+class VideoPreviewHandler implements SurfaceHolder.Callback
+{
+	public boolean videoPreviewActive = false;
 
+
+
+	public void updateVideoPreview(SurfaceHolder holder)
+	{
+		if (MyService.currentCall != null &&
+				MyService.currentCall.vidWin != null &&
+				MyService.currentCall.vidPrev != null)
+		{
+			if (videoPreviewActive) {
+				VideoWindowHandle vidWH = new VideoWindowHandle();
+				vidWH.getHandle().setWindow(holder.getSurface());
+				VideoPreviewOpParam vidPrevParam = new VideoPreviewOpParam();
+				vidPrevParam.setWindow(vidWH);
+				try {
+					MyService.currentCall.vidPrev.start(vidPrevParam);
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			} else {
+				try {
+					MyService.currentCall.vidPrev.stop();
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int format, int w, int h)
+	{
+		updateVideoPreview(holder);
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder)
+	{
+
+	}
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder)
+	{
+		try {
+			MyService.currentCall.vidPrev.stop();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+}
 
 public class CallActivity extends AppCompatActivity
 		implements Handler.Callback
 {
 
 	public static Handler handler_;
+	private static VideoPreviewHandler previewHandler =
+			new VideoPreviewHandler();
 
 	private final Handler handler = new Handler(this);
 	private static CallInfo lastCallInfo;
@@ -132,7 +210,7 @@ public class CallActivity extends AppCompatActivity
 				prm.setStatusCode(pjsip_status_code.PJSIP_SC_OK);
 //
 				try {
-					Service.currentCall.answer(prm);
+					MyService.currentCall.answer(prm);
 					ring.stop();
 				} catch (Exception e) {
 					System.out.println(e);
@@ -152,11 +230,11 @@ public class CallActivity extends AppCompatActivity
 				handler_ = null;
 				i1.setVisibility(View.GONE);
 
-				if (Service.currentCall != null) {
+				if (MyService.currentCall != null) {
 					CallOpParam prm = new CallOpParam();
 					prm.setStatusCode(pjsip_status_code.PJSIP_SC_DECLINE);
 					try {
-						Service.currentCall.hangup(prm);
+						MyService.currentCall.hangup(prm);
 						vibrator.cancel();
 						ring.stop();
 						//imageView3.setVisibility(View.GONE);
@@ -178,7 +256,7 @@ public class CallActivity extends AppCompatActivity
 						System.out.println(e);
 					}
 				}
-				unregisterReceiver(incomingCallReceiver);
+
 				finish();
 			}
 
@@ -221,23 +299,24 @@ public class CallActivity extends AppCompatActivity
 		}
 
 
-		if (Service.currentCall == null ||
-				Service.currentCall.vidWin == null)
+		if (MyService.currentCall == null ||
+				MyService.currentCall.vidWin == null)
 		{
 
 		}
 
 		KeyguardManager.KeyguardLock lock = ((KeyguardManager) getSystemService(Activity.KEYGUARD_SERVICE)).newKeyguardLock(KEYGUARD_SERVICE);
 		PowerManager powerManager = ((PowerManager) getSystemService(Context.POWER_SERVICE));
-		@SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wake = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG");
+		PowerManager.WakeLock wake = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG");
 
 		lock.disableKeyguard();
 		wake.acquire();
 
 
-
-		Window window = getWindow();
-		window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			Window window = getWindow();
+			window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
 
 
 		this.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY);
@@ -315,9 +394,9 @@ public class CallActivity extends AppCompatActivity
 		audioManager.setSpeakerphoneOn(false);
 
 		handler_ = handler;
-		if (Service.currentCall != null) {
+		if (MyService.currentCall != null) {
 			try {
-				lastCallInfo = Service.currentCall.getInfo();
+				lastCallInfo = MyService.currentCall.getInfo();
 				if (lastCallInfo != null) {
 					updateCallState(lastCallInfo);
 				}
@@ -335,7 +414,7 @@ public class CallActivity extends AppCompatActivity
 
 				if (audioManager.isSpeakerphoneOn() == false) {
 					audioManager.setSpeakerphoneOn(true);
-					speaker.setBackground(getResources().getDrawable(R.drawable.headphones));
+					speaker.setBackground(getResources().getDrawable(R.drawable.speaker2));
 				}
 				else {
 					speaker.setBackground(getResources().getDrawable(R.drawable.speaker1));
@@ -403,11 +482,11 @@ public class CallActivity extends AppCompatActivity
 				orient = pjmedia_orient.PJMEDIA_ORIENT_UNKNOWN;
 		}
 
-		if (PJSIPApp.ep != null && Service.account != null) {
+		if (MyApp.ep != null && MyService.account != null) {
 			try {
-				AccountConfig cfg = Service.account.cfg;
+				AccountConfig cfg = MyService.account.cfg;
 				int cap_dev = cfg.getVideoConfig().getDefaultCaptureDevice();
-				PJSIPApp.ep.vidDevManager().setCaptureOrient(cap_dev, orient,
+				MyApp.ep.vidDevManager().setCaptureOrient(cap_dev, orient,
 						true);
 			} catch (Exception e) {
 				System.out.println(e);
@@ -429,7 +508,7 @@ public class CallActivity extends AppCompatActivity
 		CallOpParam prm = new CallOpParam();
 		prm.setStatusCode(pjsip_status_code.PJSIP_SC_OK);
 		try {
-			Service.currentCall.answer(prm);
+			MyService.currentCall.answer(prm);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -443,12 +522,12 @@ public class CallActivity extends AppCompatActivity
 		Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 		handler_ = null;
 
-		if (Service.currentCall != null) {
+		if (MyService.currentCall != null) {
 			CallOpParam prm = new CallOpParam();
 			prm.setStatusCode(pjsip_status_code.PJSIP_SC_DECLINE);
 			try {
 
-				Service.currentCall.hangup(prm);
+				MyService.currentCall.hangup(prm);
 				vibrator.cancel();
 				long callTimeInMiliSecond = System.currentTimeMillis();
 				String numberStr = remoteURI;
@@ -476,7 +555,6 @@ public class CallActivity extends AppCompatActivity
 			}
 
 		}
-		unregisterReceiver(incomingCallReceiver);
 		finish();
 
 	}
@@ -492,18 +570,17 @@ public class CallActivity extends AppCompatActivity
 			Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 			handler_ = null;
 
-			if (Service.currentCall != null) {
+			if (MyService.currentCall != null) {
 				CallOpParam prm = new CallOpParam();
 				prm.setStatusCode(pjsip_status_code.PJSIP_SC_DECLINE);
 				try {
-					Service.currentCall.hangup(prm);
+					MyService.currentCall.hangup(prm);
 					vibrator.cancel();
 				} catch (Exception e) {
 					System.out.println(e);
 				}
 
 			}
-			unregisterReceiver(incomingCallReceiver);
 			finish();
 
 		}
@@ -515,11 +592,11 @@ public class CallActivity extends AppCompatActivity
 		Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 		handler_ = null;
 
-		if (Service.currentCall != null) {
+		if (MyService.currentCall != null) {
 			CallOpParam prm = new CallOpParam();
 			prm.setStatusCode(pjsip_status_code.PJSIP_SC_DECLINE);
 			try {
-				Service.currentCall.hangup(prm);
+				MyService.currentCall.hangup(prm);
 				vibrator.cancel();
 				long callTimeInMiliSecond = System.currentTimeMillis();
 				String numberStr = remoteURI;
@@ -547,21 +624,33 @@ public class CallActivity extends AppCompatActivity
 			}
 
 		}
-		unregisterReceiver(incomingCallReceiver);
 		finish();
 	}
+
+	public void setupVideoPreview(SurfaceView surfacePreview,
+								  Button buttonShowPreview)
+	{
+		surfacePreview.setVisibility(previewHandler.videoPreviewActive?
+				View.VISIBLE: View.GONE);
+
+		buttonShowPreview.setText(previewHandler.videoPreviewActive?
+				"Hide preview":"Show Preview");
+	}
+
+
+
 
 	@Override
 	public boolean handleMessage(Message m)
 	{
-		if (m.what == Service.MSG_TYPE.CALL_STATE) {
+		if (m.what == MyService.MSG_TYPE.CALL_STATE) {
 
 			lastCallInfo = (CallInfo) m.obj;
 			updateCallState(lastCallInfo);
 
-		} else if (m.what == Service.MSG_TYPE.CALL_MEDIA_STATE) {
+		} else if (m.what == MyService.MSG_TYPE.CALL_MEDIA_STATE) {
 
-			if (Service.currentCall.vidWin != null) {
+			if (MyService.currentCall.vidWin != null) {
 		/* Set capture orientation according to current
 		 * device orientation.
 		 */
@@ -596,9 +685,9 @@ public class CallActivity extends AppCompatActivity
 		remoteURI = remoteURI.substring(0, num);
 		tvNamePeer.setText("");
 
-		for (int i = 0; i < Service.contactListWorker.size(); i++ ) {
-			if (remoteURI.contains(Service.contactListWorker.get(i).mail)) {
-			    String namecontact = Service.contactListWorker.get(i).header;
+		for (int i = 0; i < MyService.contactListWorker.size(); i++ ) {
+			if (remoteURI.contains(MyService.contactListWorker.get(i).mail)) {
+			    String namecontact = MyService.contactListWorker.get(i).header;
 				tvNamePeer.setText(namecontact);
 				break;
 			}
@@ -659,7 +748,6 @@ public class CallActivity extends AppCompatActivity
 		else if (call_state.contains("Decline")) {
 				long callTimeInMiliSecond = System.currentTimeMillis();
 				String numberStr = remoteURI;
-				unregisterReceiver(incomingCallReceiver);
 				finish();
 		}
 
@@ -673,7 +761,6 @@ public class CallActivity extends AppCompatActivity
 			cv1.put("date", date);
 			cv1.put("duration", i);
 			MainApp.database.insert("RecentCalls", null, cv1);
-			unregisterReceiver(incomingCallReceiver);
 			finish();
 		}
 
@@ -691,7 +778,6 @@ public class CallActivity extends AppCompatActivity
 			handler.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					unregisterReceiver(incomingCallReceiver);
 					finish();
 				}
 			}, 2000);
@@ -709,7 +795,6 @@ public class CallActivity extends AppCompatActivity
 			handler.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					unregisterReceiver(incomingCallReceiver);
 					finish();
 				}
 			}, 2000);
@@ -740,7 +825,6 @@ public class CallActivity extends AppCompatActivity
 				cv1.put("duration", i);
 				MainApp.database.insert("RecentCalls", null, cv1);
 			}
-			unregisterReceiver(incomingCallReceiver);
 			finish();
 
 		}
@@ -768,7 +852,6 @@ public class CallActivity extends AppCompatActivity
 				cv1.put("duration", i);
 				MainApp.database.insert("RecentCalls", null, cv1);
 			}
-			unregisterReceiver(incomingCallReceiver);
 			finish();
 
 		}

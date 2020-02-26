@@ -1,5 +1,7 @@
 package com.telefon.ufanet;
 
+import android.graphics.Bitmap;
+
 public class ItemCalls {
 	/**
 	 * Заголовок

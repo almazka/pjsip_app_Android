@@ -29,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ufanet.myapplication.R;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
@@ -56,6 +57,8 @@ import java.util.Calendar;
 
 public class Records extends Fragment {
 
+
+
     TextView tv, tv1;
     Calendar mCirrentDate;
     int day, month, year;
@@ -76,7 +79,7 @@ public class Records extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_records, null);
+        return inflater.inflate(R.layout.record_fragment, null);
 
 
     }
@@ -125,7 +128,7 @@ public class Records extends Fragment {
         dialog1.setContentView(R.layout.date_dialog_layout);
 
 
-        final DatePicker datePicker = (DatePicker) dialog.findViewById(R.id.datePicker);
+        final DatePicker datePicker = (DatePicker) dialog.findViewById(R.id.dp);
 
         final Button button = (Button) dialog.findViewById(R.id.button_ok);
         final Calendar today = Calendar.getInstance();
@@ -157,7 +160,7 @@ public class Records extends Fragment {
         });
 
 
-        final DatePicker datePicker1 = (DatePicker) dialog1.findViewById(R.id.datePicker);
+        final DatePicker datePicker1 = (DatePicker) dialog1.findViewById(R.id.dp);
 
         final Button button1 = (Button) dialog1.findViewById(R.id.button_ok);
         Calendar today1 = Calendar.getInstance();
@@ -298,7 +301,7 @@ public class Records extends Fragment {
                                     lin_content.setLayoutParams(new LayoutParams
                                             (LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                                     lin_content.setTag(i);
-                                    lin_content.setBackground(getResources().getDrawable(R.drawable.backgrond_numbers));
+                                    lin_content.setBackground(getResources().getDrawable(R.drawable.bg_numbers));
                                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                                     layoutParams.setMargins(15,15,25,5);
 

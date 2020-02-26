@@ -10,7 +10,9 @@ public interface IAuthActivity {
     void setUserData(AuthorizeData userData);
     void showProgress();
     void hideProgress();
-    void showToast(String msg);
+    void showSuccessToast(String msg);
+    void showErrorToast(String msg);
+    void showInfoToast(String msg);
     void showExplanation(String title, String message);
     void hideKeyboard(View v);
     void init();

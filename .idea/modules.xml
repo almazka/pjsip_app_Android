@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HoloGraphLibrary/HoloGraphLibrary.iml" filepath="$PROJECT_DIR$/HoloGraphLibrary/HoloGraphLibrary.iml" group="Mobile-client-master/HoloGraphLibrary" />
+      <module fileurl="file://F:/Mobile-client-master/Mobile-client.iml" filepath="F:/Mobile-client-master/Mobile-client.iml" />
       <module fileurl="file://$PROJECT_DIR$/Mobile-client-master.iml" filepath="$PROJECT_DIR$/Mobile-client-master.iml" group="Mobile-client-master" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Mobile-client-master/app" />
     </modules>
